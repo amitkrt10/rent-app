@@ -71,4 +71,4 @@ if "login" in st.session_state.keys():
 
 else:
     st.error("Please Login First...!")
-    st.markdown("[Login](http://localhost:8501)")
+    st.markdown("[Login](https://amitkrt10-rent-app-1--home-8wtbg6.streamlitapp.com/)")
