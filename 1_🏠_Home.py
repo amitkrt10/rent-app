@@ -15,13 +15,12 @@ st.set_page_config(
 )
 
 st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: oblique;'>KARTIKEY BHAWAN</h1>", unsafe_allow_html=True)
-st.write(st.session_state)
 
 hashed_passwords = stauth.Hasher([st.secrets["LPASSWORD"]]).generate()
 credentials = {"usernames":{st.secrets["USERNAME"]:{"name":st.secrets["NAME"],"password":hashed_passwords[0]}}}
 authenticator = stauth.Authenticate(credentials,"some_signature_key","some_cookie_name",30,"amitkrt10@gmail.com")
 name, authentication_status, username = authenticator.login('Login', 'main')
-st.write(st.session_state)
+
 if authentication_status:
     authenticator.logout('Logout', 'sidebar')
     if "login" not in st.session_state:
