@@ -3,7 +3,6 @@ from datetime import date
 import dateutil.relativedelta
 import adminModules as am
 import appPlots as ap
-import tenantModules as tm
 import time
 import warnings
 warnings.filterwarnings("ignore")
@@ -17,9 +16,9 @@ st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: 
 
 if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):
-        tenantDf, activeFlatList, initiaDueDict = am.get_tenantDf()
-        meterDf, readingMonthList = am.get_meterDf()
-        consumptionDict = am.get_consumption()
+        tenantDf, activeFlatList, initiaDueDict = st.session_state["tenantDf"], st.session_state["activeFlatList"], st.session_state["initiaDueDict"]
+        meterDf, readingMonthList = st.session_state["meterDf"], st.session_state["readingMonthList"]
+        consumptionDict = st.session_state["consumptionDict"]
         st.balloons()
 
     upBillingDate = date.today() - dateutil.relativedelta.relativedelta(months=1)
@@ -48,10 +47,6 @@ if "login" in st.session_state.keys():
                     with st.spinner(text='Updating Data... Please Wait...!'):
                         am.get_meterDf.clear()
                         am.get_consumption.clear()
-                        tm.get_tenantBillDf.clear()
-                        tm.get_tenantCurrentDue.clear()
-                        tm.get_tenantInfo.clear()
-                        tm.get_tenantStatementDf.clear()
                     st.experimental_rerun()
 
     # Show Meter Readings by Month

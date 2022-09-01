@@ -1,6 +1,5 @@
 import streamlit as st
 from babel.numbers import format_number
-import adminModules as am
 import plotly.graph_objects as go
 import warnings
 warnings.filterwarnings("ignore")
@@ -14,7 +13,7 @@ st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: 
 
 if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):
-        bankDf, totalDeposite, totalWithdraw, rentCollection, electricityExpense, wifiExpense, travelDeposite = am.get_bankStatement()
+        bankDf, totalDeposite, totalWithdraw, rentCollection, electricityExpense, wifiExpense, travelDeposite = st.session_state["bankDf"], st.session_state["totalDeposite"], st.session_state["totalWithdraw"], st.session_state["rentCollection"], st.session_state["electricityExpense"], st.session_state["wifiExpense"], st.session_state["travelDeposite"]
         st.balloons()
 
     st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px red;font-style: oblique;color:yellow;'>Bank Balance = ₹ {format_number((totalDeposite - totalWithdraw), locale='en_IN')}</h3>", unsafe_allow_html=True)

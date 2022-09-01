@@ -13,8 +13,8 @@ st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: 
 
 if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):
-        tenantDf, activeFlatList, initiaDueDict = am.get_tenantDf()
-        flatDf, vacantFlatList = am.get_flatDf()
+        tenantDf, activeFlatList, initiaDueDict = st.session_state["tenantDf"], st.session_state["activeFlatList"], st.session_state["initiaDueDict"]
+        flatDf, vacantFlatList = st.session_state["flatDf"], st.session_state["vacantFlatList"]
         st.balloons()
 
     st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Property</h2>", unsafe_allow_html=True)

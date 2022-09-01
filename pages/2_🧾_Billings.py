@@ -2,7 +2,6 @@ import streamlit as st
 from datetime import date
 import dateutil.relativedelta
 import adminModules as am
-import tenantModules as tm
 import time
 from babel.numbers import format_number
 import appPlots as ap
@@ -57,10 +56,6 @@ if "login" in st.session_state.keys():
                         am.get_collectionDf.clear()
                         am.get_statementDf.clear()
                         am.get_currentDueDf.clear()
-                        tm.get_tenantBillDf.clear()
-                        tm.get_tenantCurrentDue.clear()
-                        tm.get_tenantInfo.clear()
-                        tm.get_tenantStatementDf.clear()
                     st.experimental_rerun()
 
     # View Bills

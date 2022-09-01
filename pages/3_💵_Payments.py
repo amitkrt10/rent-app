@@ -2,7 +2,6 @@ import streamlit as st
 from datetime import date
 import dateutil.relativedelta
 import adminModules as am
-import tenantModules as tm
 import time
 import warnings
 warnings.filterwarnings("ignore")
@@ -16,8 +15,8 @@ st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: 
 
 if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):
-        tenantDf, activeFlatList, initiaDueDict = am.get_tenantDf()
-        currentDueDf = am.get_currentDueDf()
+        tenantDf, activeFlatList, initiaDueDict = st.session_state["tenantDf"], st.session_state["activeFlatList"], st.session_state["initiaDueDict"]
+        currentDueDf = st.session_state["currentDueDf"]
         st.balloons()
 
     st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Payments</h2>", unsafe_allow_html=True)
@@ -40,8 +39,6 @@ if "login" in st.session_state.keys():
                 am.get_statementDf.clear()
                 am.get_currentDueDf.clear()
                 am.get_collectionDf.clear()
-                tm.get_tenantStatementDf.clear()
-                tm.get_tenantCurrentDue.clear()
                 st.experimental_rerun()
 
 else:
