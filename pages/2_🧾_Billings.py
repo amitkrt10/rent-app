@@ -17,9 +17,9 @@ st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: 
 
 if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):
-        tenantDf, activeFlatList, initiaDueDict = st.session_state["tenantDf"], st.session_state["activeFlatList"], st.session_state["initiaDueDict"]
+        tenantDf, activeFlatList = st.session_state["tenantDf"], st.session_state["activeFlatList"]
         billDf, billMonthList = st.session_state["billDf"], st.session_state["billMonthList"]
-        paymentDf, paymentMonthList = st.session_state["paymentDf"], st.session_state["paymentMonthList"]
+        paymentDf = st.session_state["paymentDf"]
         meterDf, readingMonthList = st.session_state["meterDf"], st.session_state["readingMonthList"]
         statementDf = st.session_state["statementDf"]
         st.balloons()

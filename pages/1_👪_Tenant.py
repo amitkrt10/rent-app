@@ -14,9 +14,9 @@ st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: 
 
 if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):
-        tenantDf, activeFlatList, initiaDueDict = st.session_state["tenantDf"], st.session_state["activeFlatList"], st.session_state["initiaDueDict"]
-        meterDf, readingMonthList = st.session_state["meterDf"], st.session_state["readingMonthList"]
-        flatDf, vacantFlatList = st.session_state["flatDf"], st.session_state["vacantFlatList"]
+        tenantDf, activeFlatList = st.session_state["tenantDf"], st.session_state["activeFlatList"]
+        meterDf = st.session_state["meterDf"]
+        vacantFlatList = st.session_state["vacantFlatList"]
         currentDueDf = st.session_state["currentDueDf"]
         st.balloons()
 

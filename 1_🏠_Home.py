@@ -26,7 +26,6 @@ if authentication_status:
     if "login" not in st.session_state:
         st.session_state["login"] = True
     with st.spinner(text='Reading Data... Please Wait...!'):
-        st.session_state["bankDf"], st.session_state["totalDeposite"], st.session_state["totalWithdraw"], st.session_state["rentCollection"], st.session_state["electricityExpense"], st.session_state["wifiExpense"], st.session_state["travelDeposite"] = am.get_bankStatement()
         st.session_state["tenantDf"], st.session_state["activeFlatList"], st.session_state["initiaDueDict"] = am.get_tenantDf()
         st.session_state["billDf"], st.session_state["billMonthList"] = am.get_billDf()
         st.session_state["paymentDf"], st.session_state["paymentMonthList"] = am.get_paymentDf()
@@ -38,10 +37,11 @@ if authentication_status:
         st.session_state["currentDueDf"], st.session_state["totalCurrentDue"] = am.get_currentDueDf()
         st.session_state["consumptionDict"] = am.get_consumption()
         st.session_state["flatDf"], st.session_state["vacantFlatList"] = am.get_flatDf()
-        st.session_state["bankDf"], st.session_state["totalDeposite"], st.session_state["totalWithdraw"], st.session_state["rentCollection"], st.session_state["electricityExpense"], st.session_state["wifiExpense"], st.session_state["travelDeposite"] = am.get_bankStatement()
+        st.session_state["bankDf"], st.session_state["totalDeposite"], st.session_state["totalWithdraw"], st.session_state["rentCollection"], st.session_state["electricityExpense"], st.session_state["wifiExpense"], st.session_state["travelDeposite"], st.session_state["bankAccountDf"] = am.get_bankStatement()
         collectionDf = st.session_state["collectionDf"]
         currentDueDf, totalCurrentDue = st.session_state["currentDueDf"], st.session_state["totalCurrentDue"]
-        exitDueDict, exitDueList, exitTenantList, exitDueTotal = st.session_state["exitDueDict"], st.session_state["exitDueList"], st.session_state["exitTenantList"], st.session_state["exitDueTotal"]
+        exitDueList, exitDueTotal = st.session_state["exitDueList"], st.session_state["exitDueTotal"]
+        bankAccountDf = st.session_state["bankAccountDf"]
         st.balloons()
 
     # Current Dues.
@@ -79,3 +79,14 @@ if authentication_status:
     cellFontSize = 70
     alignList = ['center','left','right']
     ap.plot_table_with_total(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+
+    #Bank Account Breakups
+    st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Cash in Bank</h3>", unsafe_allow_html=True)
+    column_headers = ['Account','Balance']
+    cellText = bankAccountDf
+    colWidths = [1,1]
+    scaleY = 7
+    headerFontSize = 50
+    cellFontSize = 50
+    alignList = ['left','right']
+    ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)

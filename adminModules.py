@@ -357,5 +357,8 @@ def get_bankStatement():
     wifi = cursor.fetchall()
     cursor.execute("""select sum(withdrawal) from public.bank_statement where account = 'PKD' and remark like '%Ticket%'""")
     ticket = cursor.fetchall()
+    cursor.execute("""select account, cast(sum(deposit)-sum(withdrawal) as int) as balance from public.bank_statement group by account order by balance desc""")
+    bankAccountDf = cursor.fetchall()
+    # bankAccountDf = list(map(list, zip(*bankAccount)))
     conn.close()
-    return bankDf, int(depWit[0][0]), int(depWit[0][1]), int(rentCol[0][0]), int(elec[0][0]), int(wifi[0][0]), int(ticket[0][0])
+    return bankDf, int(depWit[0][0]), int(depWit[0][1]), int(rentCol[0][0]), int(elec[0][0]), int(wifi[0][0]), int(ticket[0][0]), bankAccountDf
