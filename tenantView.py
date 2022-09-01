@@ -23,7 +23,6 @@ name, authentication_status, username = authenticator.login('Login', 'main')
 
 if authentication_status:
     flatNo = st.session_state["name"]
-    st.write(flatNo)
     with st.spinner(text='Reading Data... Please Wait...!'):
         st.session_state["tenantInfo"] = tm.get_tenantInfo(flatNo)
         st.session_state["tenantBillDf"] = tm.get_tenantBillDf(flatNo)

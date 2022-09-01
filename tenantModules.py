@@ -5,7 +5,7 @@ import streamlit_authenticator as stauth
 import warnings
 warnings.filterwarnings("ignore")
 
-@st.experimental_memo
+@st.experimental_memo(ttl=10800)
 def get_tenantInfo(flatNo):
     # read the connection parameters
     HOST= st.secrets["HOST"]
@@ -21,7 +21,7 @@ def get_tenantInfo(flatNo):
     conn.close()
     return list(result[0])
 
-@st.experimental_memo
+@st.experimental_memo(ttl=10800)
 def get_tenantBillDf(flatNo):
     # read the connection parameters
     HOST= st.secrets["HOST"]
@@ -36,7 +36,7 @@ def get_tenantBillDf(flatNo):
     conn.close()
     return tenantBillDf
 
-@st.experimental_memo
+@st.experimental_memo(ttl=10800)
 def get_tenantStatementDf(flatNo):
     # read the connection parameters
     HOST= st.secrets["HOST"]
@@ -60,7 +60,7 @@ def get_tenantStatementDf(flatNo):
     conn.close()
     return tenantStatementDf
 
-@st.experimental_memo
+@st.experimental_memo(ttl=10800)
 def get_tenantCurrentDue(flatNo):
     # read the connection parameters
     HOST= st.secrets["HOST"]
