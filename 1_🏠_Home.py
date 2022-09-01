@@ -18,7 +18,7 @@ st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: 
 
 hashed_passwords = stauth.Hasher([st.secrets["LPASSWORD"]]).generate()
 credentials = {"usernames":{st.secrets["USERNAME"]:{"name":st.secrets["NAME"],"password":hashed_passwords[0]}}}
-authenticator = stauth.Authenticate(credentials,"admin_signature_name","admin_cookie_key",30,"amitkrt10@gmail.com")
+authenticator = stauth.Authenticate(credentials,"admin_signature_name","admin_cookie_key",365,"amitkrt10@gmail.com")
 name, authentication_status, username = authenticator.login('Login', 'main')
 
 if authentication_status:
