@@ -86,11 +86,11 @@ def get_tenantCurrentDue(flatNo):
 @st.experimental_memo
 def get_loginCredential():
     # read the connection parameters
-    HOST="ec2-34-235-31-124.compute-1.amazonaws.com"
-    DATABASE="d62t8amconeiot"
-    USER="whifrizefokwhe"
-    PORT="5432"
-    PASSWORD="784e968ef8840b240d1060a33d7740c26e729e2d7fded8eadcf5bf476b76090a"
+    HOST= st.secrets["HOST"]
+    DATABASE= st.secrets["DATABASE"]
+    USER= st.secrets["USER"]
+    PORT= st.secrets["PORT"]
+    PASSWORD= st.secrets["PASSWORD"]
     # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cursor = conn.cursor()
