@@ -16,20 +16,23 @@ st.set_page_config(
 
 st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: oblique;'>KARTIKEY BHAWAN</h1>", unsafe_allow_html=True)
 
-hashed_passwords = stauth.Hasher([st.secrets["LPASSWORD"]]).generate()
-credentials = {"usernames":{st.secrets["USERNAME"]:{"name":st.secrets["NAME"],"password":hashed_passwords[0]}}}
-authenticator = stauth.Authenticate(credentials,"some_signature_key","some_cookie_name",30,"amitkrt10@gmail.com")
+credentialDict = tm.get_loginCredential()
+
+authenticator = stauth.Authenticate(credentialDict,"tenant_signature_name","tenant_cookie_key",0,"immy.brat@gmail.com")
 name, authentication_status, username = authenticator.login('Login', 'main')
 
 if authentication_status:
-    authenticator.logout('Logout', 'sidebar')
-    if "login" not in st.session_state:
-        st.session_state["login"] = True
+    flatNo = st.session_state["name"]
+    st.write(flatNo)
     with st.spinner(text='Reading Data... Please Wait...!'):
-        tenantInfo = tm.get_tenantInfo(flatNo)
-        tenantBillDf = tm.get_tenantBillDf(flatNo)
-        tenantStatementDf = tm.get_tenantStatementDf(flatNo)
-        tenantCurrentDue = tm.get_tenantCurrentDue(flatNo)
+        st.session_state["tenantInfo"] = tm.get_tenantInfo(flatNo)
+        st.session_state["tenantBillDf"] = tm.get_tenantBillDf(flatNo)
+        st.session_state["tenantStatementDf"] = tm.get_tenantStatementDf(flatNo)
+        st.session_state["tenantCurrentDue"] = tm.get_tenantCurrentDue(flatNo)
+        tenantInfo = st.session_state["tenantInfo"]
+        tenantBillDf = st.session_state["tenantBillDf"]
+        tenantStatementDf = st.session_state["tenantStatementDf"]
+        tenantCurrentDue = st.session_state["tenantCurrentDue"]
         st.balloons()
 
     st.write(f"Wecome **{tenantInfo[1]}**")
@@ -89,3 +92,8 @@ if authentication_status:
     cellFontSize = 30
     alignList = ['left','right']
     ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+
+elif authentication_status == False:
+    st.error('Username/password is incorrect')
+elif authentication_status == None:
+    st.warning('Please enter your username and password')

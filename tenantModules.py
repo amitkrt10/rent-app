@@ -1,6 +1,7 @@
 import pandas as pd
 import psycopg2
 import streamlit as st
+import streamlit_authenticator as stauth
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -85,17 +86,21 @@ def get_tenantCurrentDue(flatNo):
 @st.experimental_memo
 def get_loginCredential():
     # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
+    HOST="ec2-34-235-31-124.compute-1.amazonaws.com"
+    DATABASE="d62t8amconeiot"
+    USER="whifrizefokwhe"
+    PORT="5432"
+    PASSWORD="784e968ef8840b240d1060a33d7740c26e729e2d7fded8eadcf5bf476b76090a"
     # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cursor = conn.cursor()
     cursor.execute('''SELECT flat_no, username, password FROM public.active_tenants''')
     result = cursor.fetchall()
-    credential = list(map(list, zip(*result)))
-    #Closing the connection
     conn.close()
-    return credential
+    credentialList = list(map(list, zip(*result)))
+    hashed_passwords = stauth.Hasher(credentialList[2]).generate()
+    usernames = {}
+    for i in range(len(credentialList[0])):
+        usernames[credentialList[1][i]] = {"name":credentialList[0][i],"password":hashed_passwords[i]}
+    credentialDict = {"usernames":usernames}
+    return credentialDict
