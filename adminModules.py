@@ -357,7 +357,7 @@ def get_bankStatement():
     wifi = cursor.fetchall()
     cursor.execute("""select sum(withdrawal) from public.bank_statement where account = 'PKD' and remark like '%Ticket%'""")
     ticket = cursor.fetchall()
-    cursor.execute("""select account, cast(sum(deposit)-sum(withdrawal) as int) as balance from public.bank_statement group by account order by balance desc""")
+    cursor.execute("""select account, cast(sum(deposit)-sum(withdrawal) as int) as balance from public.bank_statement where account != 'Anita' group by account order by balance desc""")
     bankAccountDf = cursor.fetchall()
     # bankAccountDf = list(map(list, zip(*bankAccount)))
     conn.close()
