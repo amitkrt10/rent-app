@@ -44,7 +44,7 @@ if authentication_status:
         exitDueDict, exitDueList, exitTenantList, exitDueTotal = st.session_state["exitDueDict"], st.session_state["exitDueList"], st.session_state["exitTenantList"], st.session_state["exitDueTotal"]
         st.balloons()
 
-    # Current Dues
+    # Current Dues.
     currentDueDf.loc[len(currentDueDf.index)] = ["Total",totalCurrentDue]
     st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Current Dues = ₹ {format_number(totalCurrentDue, locale='en_IN')}</h3>", unsafe_allow_html=True)
     #Show Table

@@ -47,15 +47,14 @@ if "login" in st.session_state.keys():
                         previousDue = billDf[billDf.index==x]["total"].sum() - paymentDf[paymentDf.index==x]["amount"].sum() + tenantDf[tenantDf.index==x]["previous_due"].values[0]
                         total = rentAmt + waterCharge + garbageCharge + meterCost
                         fulltotal = total + previousDue
-                        am.runSql(f"""INSERT INTO public.bills(flat_no, bill_date, bill_month, rent_amount, water_charge, garbage_charge, meter_cost, previous_due, total, fulltotal) VALUES ('{x}','{today}','{upBillingMonth}','{rentAmt}','{waterCharge}','{garbageCharge}','{meterCost}','{previousDue}','{total}','{fulltotal}')""")
+                        am.runSql(f"""INSERT INTO public.bills(flat_no, bill_date, bill_month, rent_amount, water_charge, garbage_charge, meter_cost, previous_due, total, fulltotal) VALUES ('{x}','{date.today()}','{upBillingMonth}','{rentAmt}','{waterCharge}','{garbageCharge}','{meterCost}','{previousDue}','{total}','{fulltotal}')""")
                         st.write(f"Bill created for {x}")
                     st.write('Done!')
                     time.sleep(3)
-                    with st.spinner(text='Updating Data... Please Wait...!'):
-                        am.get_billDf.clear()
-                        am.get_collectionDf.clear()
-                        am.get_statementDf.clear()
-                        am.get_currentDueDf.clear()
+                    am.get_billDf.clear()
+                    am.get_collectionDf.clear()
+                    am.get_statementDf.clear()
+                    am.get_currentDueDf.clear()
                     st.experimental_rerun()
 
     # View Bills
