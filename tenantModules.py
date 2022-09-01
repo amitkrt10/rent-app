@@ -81,3 +81,21 @@ def get_tenantCurrentDue(flatNo):
     result = cursor.fetchall()
     conn.close()
     return result[0][0]
+
+@st.experimental_memo
+def get_loginCredential():
+    # read the connection parameters
+    HOST= st.secrets["HOST"]
+    DATABASE= st.secrets["DATABASE"]
+    USER= st.secrets["USER"]
+    PORT= st.secrets["PORT"]
+    PASSWORD= st.secrets["PASSWORD"]
+    # connect to the PostgreSQL server
+    conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
+    cursor = conn.cursor()
+    cursor.execute('''SELECT flat_no, username, password FROM public.active_tenants''')
+    result = cursor.fetchall()
+    credential = list(map(list, zip(*result)))
+    #Closing the connection
+    conn.close()
+    return credential
