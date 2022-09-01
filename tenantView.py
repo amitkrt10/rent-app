@@ -18,7 +18,7 @@ st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: 
 
 credentialDict = tm.get_loginCredential()
 
-authenticator = stauth.Authenticate(credentialDict,"tenant_signature_name","tenant_cookie_key",0,"immy.brat@gmail.com")
+authenticator = stauth.Authenticate(credentialDict,"tenant_signature_name","tenant_cookie_key",365,"amitkrt10@gmail.com")
 name, authentication_status, username = authenticator.login('Login', 'main')
 
 if authentication_status:
