@@ -85,12 +85,24 @@ if authentication_status:
     cellText.append(['Garbage Charge', f'₹ {tenantInfo[6]}'])
     cellText.append(['Electricity Charge', '₹ 10 / unit'])
     cellText.append(['Date of Occupancy', tenantInfo[9]])
-    colWidths = [1,1,1,1]
+    colWidths = [1,1]
     scaleY = 6
     headerFontSize = 30
     cellFontSize = 30
     alignList = ['left','right']
     ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+
+    #Tenant Info
+    st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Service Providers</h3>", unsafe_allow_html=True)
+    column_headers = ['Service','Name', 'Contact']
+    cellText = [['Electrician','Bijay','75010 77783'],['Plumber','Bapan','96412 23532']]
+    colWidths = [1,1,1]
+    scaleY = 6
+    headerFontSize = 30
+    cellFontSize = 30
+    alignList = ['left','left','right']
+    ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+
 
 elif authentication_status == False:
     st.error('Username/password is incorrect')
