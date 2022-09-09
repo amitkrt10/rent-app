@@ -95,13 +95,19 @@ if authentication_status:
     #Tenant Info
     st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Service Providers</h3>", unsafe_allow_html=True)
     column_headers = ['Service','Name', 'Contact']
-    cellText = [['Electrician','Bijay','75010 77783'],['Plumber','Bapan','96412 23532']]
+    cellText = [['Electrician','Bijay','75010 77783'],['Plumber','Bapan','96412 23532'],['Painter','Ashok Kaku','99337 61483'],['Carpenter','Meghnath','98326 96055'],['Internet | Wifi | Cable','Amit','98320 38570']]
     colWidths = [1,1,1]
     scaleY = 6
     headerFontSize = 30
     cellFontSize = 30
     alignList = ['left','left','right']
     ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+    st.error("Please inform the owner before making any changes or repair to the property")
+
+    st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Owner Details</h3>", unsafe_allow_html=True)
+    st.markdown("<h6 style='font-style: oblique;'>R N Thakur - 70051 43261</h6>", unsafe_allow_html=True)
+    st.markdown("<h6 style='font-style: oblique;'>Amit Kumar - 89181 04083</h6>", unsafe_allow_html=True)
+
 
 
 elif authentication_status == False:
