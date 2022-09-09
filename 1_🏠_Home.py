@@ -90,3 +90,7 @@ if authentication_status:
     cellFontSize = 50
     alignList = ['left','right']
     ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+
+    if st.sidebar.button("Refresh Data",key="clearCache"):
+        st.experimental_memo.clear()
+        st.experimental_rerun()
