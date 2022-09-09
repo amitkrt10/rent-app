@@ -39,26 +39,29 @@ if authentication_status:
     #Current Due
     st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px red;font-style: oblique;color:yellow;'>Current Due = ₹ {format_number(tenantCurrentDue, locale='en_IN')}</h3>", unsafe_allow_html=True)
 
-    #Bills
-    st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>View Bills</h3>", unsafe_allow_html=True)
-    billMonth = st.selectbox("Select Rent Month", list(tenantBillDf.index))
-    tempBillList = list(tenantBillDf[tenantBillDf.index==billMonth].values[0])
-    cellText = []
-    cellText.append(["Rent",tempBillList[2]])
-    cellText.append(["Electricity",tempBillList[5]])
-    if tempBillList[3] != 0:
-        cellText.append(["Water Charge",tempBillList[3]])
-    cellText.append(["Garbage",tempBillList[4]])
-    if tempBillList[6] != 0:
-        cellText.append(["Previous Due",tempBillList[6]])
-    cellText.append(["Total",tempBillList[8]])
-    column_headers = [flatNo,billMonth]
-    colWidths = [1,1]
-    scaleY = 5
-    headerFontSize = 30
-    cellFontSize = 30
-    alignList = ['left','right']
-    ap.plot_table_with_total(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+    try:
+        #Bills
+        st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>View Bills</h3>", unsafe_allow_html=True)
+        billMonth = st.selectbox("Select Rent Month", list(tenantBillDf.index))
+        tempBillList = list(tenantBillDf[tenantBillDf.index==billMonth].values[0])
+        cellText = []
+        cellText.append(["Rent",tempBillList[2]])
+        cellText.append(["Electricity",tempBillList[5]])
+        if tempBillList[3] != 0:
+            cellText.append(["Water Charge",tempBillList[3]])
+        cellText.append(["Garbage",tempBillList[4]])
+        if tempBillList[6] != 0:
+            cellText.append(["Previous Due",tempBillList[6]])
+        cellText.append(["Total",tempBillList[8]])
+        column_headers = [flatNo,billMonth]
+        colWidths = [1,1]
+        scaleY = 5
+        headerFontSize = 30
+        cellFontSize = 30
+        alignList = ['left','right']
+        ap.plot_table_with_total(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+    except:
+        pass
 
     #Statement
     st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Statement</h3>", unsafe_allow_html=True)
