@@ -337,11 +337,16 @@ def get_bankStatement():
     PASSWORD= st.secrets["PASSWORD"]
     # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
-    sql = '''SELECT transaction_date, deposit, withdrawal, sum(temp_diff) OVER (ORDER BY transaction_date) as balance, remark 
-        FROM (select transaction_date, deposit, withdrawal, deposit - withdrawal as temp_diff, remark
+    sql = '''with summary as (
+        select transaction_date, deposit, withdrawal, deposit - withdrawal as temp_diff, remark
         from public.bank_statement
         where account = 'PKD'
-        order by transaction_date) summary'''
+        order by transaction_date)
+        select
+        transaction_date, deposit, withdrawal,
+        sum(temp_diff) over (order by transaction_date asc rows between unbounded preceding and current row),
+        remark
+        from summary'''
     bankDf = pd.read_sql(sql, con=conn)
     bankDf['deposit'] = bankDf['deposit'].apply(lambda x: format_number(int(x), locale='en_IN'))
     bankDf['withdrawal'] = bankDf['withdrawal'].apply(lambda x: format_number(int(x), locale='en_IN'))
