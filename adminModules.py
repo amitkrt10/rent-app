@@ -344,7 +344,7 @@ def get_bankStatement():
         order by transaction_date)
         select
         transaction_date, deposit, withdrawal,
-        sum(temp_diff) over (order by transaction_date asc rows between unbounded preceding and current row),
+        sum(temp_diff) over (order by transaction_date asc rows between unbounded preceding and current row) as balance,
         remark
         from summary'''
     bankDf = pd.read_sql(sql, con=conn)
