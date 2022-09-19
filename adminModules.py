@@ -41,7 +41,7 @@ def get_tenantDf():
     PASSWORD= st.secrets["PASSWORD"]
     # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
-    tenantDf = pd.read_sql('''SELECT * FROM public.active_tenants''', con=conn)
+    tenantDf = pd.read_sql('''SELECT * FROM public.active_tenants ORDER BY flat_no''', con=conn)
     tenantDf.set_index('flat_no',inplace=True)
     cursor = conn.cursor()
     cursor.execute('''SELECT flat_no, previous_due FROM public.active_tenants ORDER BY flat_no''')
