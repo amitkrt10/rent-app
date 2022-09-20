@@ -26,7 +26,7 @@ if authentication_status:
     if "login" not in st.session_state:
         st.session_state["login"] = True
     with st.spinner(text='Reading Data... Please Wait...!'):
-        st.session_state["tenantDf"], st.session_state["activeFlatList"], st.session_state["initiaDueDict"] = am.get_tenantDf()
+        st.session_state["tenantDf"], st.session_state["activeFlatList"], st.session_state["initiaDueDict"], st.session_state["newTenantFlats"] = am.get_tenantDf()
         st.session_state["billDf"], st.session_state["billMonthList"] = am.get_billDf()
         st.session_state["paymentDf"], st.session_state["paymentMonthList"] = am.get_paymentDf()
         st.session_state["meterDf"], st.session_state["readingMonthList"] = am.get_meterDf()

@@ -22,7 +22,6 @@ if "login" in st.session_state.keys():
         paymentDf = st.session_state["paymentDf"]
         meterDf, readingMonthList = st.session_state["meterDf"], st.session_state["readingMonthList"]
         statementDf = st.session_state["statementDf"]
-        newTenantFlats = st.session_state["newTenantFlats"]
         st.balloons()
 
     upBillingDate = date.today() - dateutil.relativedelta.relativedelta(months=1)
@@ -38,27 +37,17 @@ if "login" in st.session_state.keys():
             if upBillingMonth not in readingMonthList:
                 st.write(f"Take meter reading for {upBillingMonth} first")
             else:
-                if len(newTenantFlats)>0:
-                    st.write("Bill days for new tenant")
-                    for x in newTenantFlats:
-                        st.text_input(f"No. of days for {x}",key=f"{x}factor")
                 if st.button(f"Create for {upBillingMonth}"):
                     for x in activeFlatList:
-                        try:
-                            rentAmt = tenantDf[tenantDf.index==x]["rent_amount"].values[0] * (int(st.session_state[f"{x}factor"])/30)
-                        except:
-                            rentAmt = tenantDf[tenantDf.index==x]["rent_amount"].values[0]
-                        try:
-                            waterCharge = tenantDf[tenantDf.index==x]["water_charge"].values[0] * (int(st.session_state[f"{x}factor"])/30)
-                        except:
-                            waterCharge = tenantDf[tenantDf.index==x]["water_charge"].values[0]
+                        rentAmt = tenantDf[tenantDf.index==x]["rent_amount"].values[0]
+                        waterCharge = tenantDf[tenantDf.index==x]["water_charge"].values[0]
                         garbageCharge = tenantDf[tenantDf.index==x]["garbage_charge"].values[0]
                         readingList = list(meterDf[meterDf.index==x]["readings"].values)
                         meterCost = (readingList[-1]-readingList[-2])*10
                         previousDue = billDf[billDf.index==x]["total"].sum() - paymentDf[paymentDf.index==x]["amount"].sum() + tenantDf[tenantDf.index==x]["previous_due"].values[0]
                         total = rentAmt + waterCharge + garbageCharge + meterCost
                         fulltotal = total + previousDue
-                        am.runSql(f"""INSERT INTO public.bills(flat_no, bill_date, bill_month, rent_amount, water_charge, garbage_charge, meter_cost, previous_due, total, fulltotal) VALUES ('{x}','{date.today()}','{upBillingMonth}','{int(rentAmt)}','{int(waterCharge)}','{garbageCharge}','{meterCost}','{previousDue}','{int(total)}','{int(fulltotal)}')""")
+                        am.runSql(f"""INSERT INTO public.bills(flat_no, bill_date, bill_month, rent_amount, water_charge, garbage_charge, meter_cost, previous_due, total, fulltotal) VALUES ('{x}','{date.today()}','{upBillingMonth}','{rentAmt}','{waterCharge}','{garbageCharge}','{meterCost}','{previousDue}','{total}','{fulltotal}')""")
                         st.write(f"Bill created for {x}")
                     st.write('Done!')
                     time.sleep(3)

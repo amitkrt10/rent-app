@@ -50,8 +50,11 @@ def get_tenantDf():
     for x in result:
         initiaDueDict.update({x[0]:x[1]})
     activeFlatList = list(initiaDueDict.keys())
+    cursor.execute('''select flat_no from public.active_tenants where (CURRENT_DATE -  date_of_ocupancy) < 28 order by flat_no''')
+    newTenant = cursor.fetchall()
+    newTenant = list(map(list, zip(*newTenant)))
     conn.close()
-    return tenantDf, activeFlatList, initiaDueDict
+    return tenantDf, activeFlatList, initiaDueDict, newTenant[0]
 
 @st.experimental_memo
 def get_exitTenantDf():
