@@ -18,6 +18,7 @@ if "login" in st.session_state.keys():
         meterDf = st.session_state["meterDf"]
         vacantFlatList = st.session_state["vacantFlatList"]
         currentDueDf = st.session_state["currentDueDf"]
+        tenantInfoDict = st.session_state["tenantInfoDict"]
         st.balloons()
 
     st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Tenants</h2>", unsafe_allow_html=True)
@@ -31,6 +32,26 @@ if "login" in st.session_state.keys():
         headerFontSize = 100
         cellFontSize = 80
         alignList = ['center','left','center']
+        ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+
+    #Tenants Info
+    with st.expander("Tenants Info"):
+        selectedInfoFlat = st.selectbox("Flat No.",activeFlatList,key='tenantInfo')
+        infoList = tenantInfoDict[selectedInfoFlat]
+        column_headers = [selectedInfoFlat, infoList[0]]
+        cellText = []
+        cellText.append(['Mobile', infoList[1]])
+        cellText.append(['Security Deposite', f'₹ {infoList[2]}'])
+        cellText.append(['Rent', f'₹ {infoList[3]}'])
+        cellText.append(['Water Charge', f'₹ {infoList[4]}'])
+        cellText.append(['Garbage Charge', f'₹ {infoList[5]}'])
+        cellText.append(['Electricity Charge', '₹ 10 / unit'])
+        cellText.append(['Date of Occupancy', infoList[6]])
+        colWidths = [1,1]
+        scaleY = 6
+        headerFontSize = 30
+        cellFontSize = 30
+        alignList = ['left','right']
         ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
 
     #Add New Tenant Form

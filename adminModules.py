@@ -370,3 +370,22 @@ def get_bankStatement():
     # bankAccountDf = list(map(list, zip(*bankAccount)))
     conn.close()
     return bankDf, int(depWit[0][0]), int(depWit[0][1]), int(rentCol[0][0]), int(elec[0][0]), int(wifi[0][0]), int(ticket[0][0]), bankAccountDf
+
+@st.experimental_memo
+def get_tenantInfo():
+    # read the connection parameters
+    HOST= st.secrets["HOST"]
+    DATABASE= st.secrets["DATABASE"]
+    USER= st.secrets["USER"]
+    PORT= st.secrets["PORT"]
+    PASSWORD= st.secrets["PASSWORD"]
+    # connect to the PostgreSQL server
+    conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
+    cursor = conn.cursor()
+    cursor.execute("""select flat_no, tenant_name, mobile, security_deposite, rent_amount, water_charge, garbage_charge, date_of_ocupancy from public.active_tenants""")
+    result = cursor.fetchall()
+    conn.close()
+    tenantInfoDict = {}
+    for x in result:
+        tenantInfoDict[x[0]]=x[1:]
+    return tenantInfoDict

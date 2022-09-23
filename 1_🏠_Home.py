@@ -38,6 +38,7 @@ if authentication_status:
         st.session_state["consumptionDict"] = am.get_consumption()
         st.session_state["flatDf"], st.session_state["vacantFlatList"] = am.get_flatDf()
         st.session_state["bankDf"], st.session_state["totalDeposite"], st.session_state["totalWithdraw"], st.session_state["rentCollection"], st.session_state["electricityExpense"], st.session_state["wifiExpense"], st.session_state["travelDeposite"], st.session_state["bankAccountDf"] = am.get_bankStatement()
+        st.session_state["tenantInfoDict"] = am.get_tenantInfo()
         collectionDf = st.session_state["collectionDf"]
         currentDueDf, totalCurrentDue = st.session_state["currentDueDf"], st.session_state["totalCurrentDue"]
         exitDueList, exitDueTotal = st.session_state["exitDueList"], st.session_state["exitDueTotal"]
