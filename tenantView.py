@@ -24,14 +24,10 @@ name, authentication_status, username = authenticator.login('Login', 'main')
 if authentication_status:
     flatNo = st.session_state["name"]
     with st.spinner(text='Reading Data... Please Wait...!'):
-        st.session_state["tenantInfo"] = tm.get_tenantInfo(flatNo)
-        st.session_state["tenantBillDf"] = tm.get_tenantBillDf(flatNo)
-        st.session_state["tenantStatementDf"] = tm.get_tenantStatementDf(flatNo)
-        st.session_state["tenantCurrentDue"] = tm.get_tenantCurrentDue(flatNo)
-        tenantInfo = st.session_state["tenantInfo"]
-        tenantBillDf = st.session_state["tenantBillDf"]
-        tenantStatementDf = st.session_state["tenantStatementDf"]
-        tenantCurrentDue = st.session_state["tenantCurrentDue"]
+        tenantInfo = tm.get_tenantInfo(flatNo)
+        tenantBillDf = tm.get_tenantBillDf(flatNo)
+        tenantStatementDf = tm.get_tenantStatementDf(flatNo)
+        tenantCurrentDue = tm.get_tenantCurrentDue(flatNo)
         st.balloons()
 
     st.write(f"Wecome **{tenantInfo[1]}**")
@@ -95,7 +91,7 @@ if authentication_status:
     alignList = ['left','right']
     ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
 
-    #Tenant Info
+    #Service Providers
     st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Service Providers</h3>", unsafe_allow_html=True)
     column_headers = ['Service','Name', 'Contact']
     cellText = [['Electrician','Bijay','75010 77783'],['Plumber','Bapan','96412 23532'],['Painter','Ashok Kaku','99337 61483'],['Carpenter','Meghnath','98326 96055'],['Internet | Wifi | Cable','Amit','98320 38570']]
