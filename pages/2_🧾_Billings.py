@@ -136,7 +136,7 @@ if "login" in st.session_state.keys():
             detailList = whatsappData[selectedFlatWa]
             st.write(f"Current Due = ₹ {detailList[2]}")
             messages = f"REMINDER!!!\n\nHi, {detailList[0]}\nYour Current Rent Due = ₹ {detailList[2]}\nPlease pay at the earliest\n\nThanks\nKartikey Bhawan"
-            st.write(f"[Send Reminder](https://web.whatsapp.com/send?phone=+91{detailList[1]}&text={quote(messages)})")
+            st.write(f"[Send Reminder](https://wa.me/phone=+91{detailList[1]}?text={quote(messages)})")
             # if st.button("Send Reminder"):
                 # messages = f"REMINDER!!!\n\nHi, {detailList[0]}\nYour Current Rent Due = ₹ {detailList[2]}\nPlease pay at the earliest\n\nThanks\nKartikey Bhawan"
                 # st.write(f"Reminder sent to {selectedFlatWa}")
