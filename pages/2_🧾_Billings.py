@@ -5,7 +5,7 @@ import adminModules as am
 import time
 from babel.numbers import format_number
 import appPlots as ap
-import pywhatkit
+# import pywhatkit
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -136,7 +136,7 @@ if "login" in st.session_state.keys():
             st.write(f"Current Due = ₹ {detailList[2]}")
             if st.button("Send Reminder"):
                 messages = f"REMINDER!!!\n\nHi, {detailList[0]}\nYour Current Rent Due = ₹ {detailList[2]}\nPlease pay at the earliest\n\nThanks\nKartikey Bhawan"
-                pywhatkit.sendwhatmsg_instantly(f"+918837245956", messages)
+                # pywhatkit.sendwhatmsg_instantly(f"+918837245956", messages)
                 st.write(f"Reminder sent to {selectedFlatWa}")
 
 
