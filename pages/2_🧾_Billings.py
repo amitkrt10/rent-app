@@ -136,7 +136,7 @@ if "login" in st.session_state.keys():
             st.write(f"Current Due = ₹ {detailList[2]}")
             if st.button("Send Reminder"):
                 messages = f"REMINDER!!!\n\nHi, {detailList[0]}\nYour Current Rent Due = ₹ {detailList[2]}\nPlease pay at the earliest\n\nThanks\nKartikey Bhawan"
-                # pywhatkit.sendwhatmsg_instantly(f"+918837245956", messages)
+                am.send_whatsapp_msg(detailList[1],messages)
                 st.write(f"Reminder sent to {selectedFlatWa}")
 
 
