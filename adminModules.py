@@ -3,7 +3,7 @@ import pandas as pd
 import psycopg2
 import streamlit as st
 from babel.numbers import format_number
-from twilio.rest import Client
+# from twilio.rest import Client
 import warnings
 warnings.filterwarnings("ignore")
 
