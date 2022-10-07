@@ -44,9 +44,8 @@ if "login" in st.session_state.keys():
                         am.runSql(f"""INSERT INTO public.meter_reading(flat_no, reading_date, reading_month, readings) VALUES ('{x}','{readingDate}','{upBillingMonth}','{readingDict[x]}')""")
                     st.write(f"Reading successfully taken for {upBillingMonth}")
                     time.sleep(3)
-                    with st.spinner(text='Updating Data... Please Wait...!'):
-                        am.get_meterDf.clear()
-                        am.get_consumption.clear()
+                    am.get_meterDf.clear()
+                    am.get_consumption.clear()
                     st.experimental_rerun()
 
     # Show Meter Readings by Month

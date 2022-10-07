@@ -3,6 +3,7 @@ import pandas as pd
 import psycopg2
 import streamlit as st
 from babel.numbers import format_number
+from twilio.rest import Client
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -389,3 +390,36 @@ def get_tenantInfo():
     for x in result:
         tenantInfoDict[x[0]]=x[1:]
     return tenantInfoDict
+
+@st.experimental_memo
+def get_whatsappData():
+    # read the connection parameters
+    HOST= st.secrets["HOST"]
+    DATABASE= st.secrets["DATABASE"]
+    USER= st.secrets["USER"]
+    PORT= st.secrets["PORT"]
+    PASSWORD= st.secrets["PASSWORD"]
+    # connect to the PostgreSQL server
+    conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
+    cursor = conn.cursor()
+    sql = """select t.flat_no, t.tenant_name, t.mobile, t.previous_due+coalesce(b.total_bill,0)-coalesce(p.total_payment,0) as dues
+        from public.active_tenants t
+        left join (select flat_no, sum(total) as total_bill from public.bills group by 1) b
+        on t.flat_no = b.flat_no
+        left join (select flat_no, sum(amount) as total_payment from public.payments group by 1) p
+        on t.flat_no = p.flat_no
+        order by t.flat_no"""
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    conn.close()
+    whatsappData = {}
+    for x in result:
+        whatsappData[x[0]]=x[1:]
+    return whatsappData
+
+# def send_whatsapp_msg(body,mobile):
+#     mobile=8918104083
+#     TWILIO_SSID=st.secrets["TWILIO_SSID"]
+#     TWILIO_API_KEY=st.secrets["TWILIO_API_KEY"]
+#     client = Client(TWILIO_SSID,TWILIO_API_KEY)
+#     client.messages.create(body=body,from_='whatsapp:+14155238886',to=f'whatsapp:+91{mobile}')

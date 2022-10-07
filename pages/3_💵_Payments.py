@@ -35,10 +35,7 @@ if "login" in st.session_state.keys():
                 am.runSql(f"""INSERT INTO public.payments(flat_no, payment_date, payment_month, amount, payment_mode) VALUES ('{flatNo}','{paymentDate}','{paymentMonth}','{amount}','{mode}')""")
                 st.write(f"₹ {amount} recieved from {tenantDf[tenantDf.index==flatNo]['tenant_name'].values[0]} by {mode}")
                 time.sleep(3)
-                am.get_paymentDf.clear()
-                am.get_statementDf.clear()
-                am.get_currentDueDf.clear()
-                am.get_collectionDf.clear()
+                st.experimental_memo.clear()
                 st.experimental_rerun()
 
 else:

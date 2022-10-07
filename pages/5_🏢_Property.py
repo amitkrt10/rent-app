@@ -40,8 +40,7 @@ if "login" in st.session_state.keys():
             if submitted:
                 am.runSql(f"""INSERT INTO public.flats(flat_no, flat_type, facilities) VALUES ('{flatNo}','{flatType}','{facilities}')""")
                 st.write(f"New flat - {flatNo} successfully added.")
-                with st.spinner(text='Updating Data... Please Wait...!'):
-                    am.get_flatDf.clear()
+                st.experimental_memo.clear()
                 st.experimental_rerun()
 
     #Modify Facilities
@@ -53,8 +52,7 @@ if "login" in st.session_state.keys():
             if submitted:
                 am.runSql(f"""UPDATE public.flats SET facilities = '{facilities}' WHERE flat_no = '{selectedFlat}'""")
                 st.write(f"Flat - {selectedFlat} successfully updated.")
-                with st.spinner(text='Updating Data... Please Wait...!'):
-                    am.get_flatDf.clear()
+                st.experimental_memo.clear()
                 st.experimental_rerun()
 
     #Revomve flat
@@ -65,8 +63,7 @@ if "login" in st.session_state.keys():
             if submitted:
                 am.runSql(f"""DELETE FROM public.flats WHERE flat_no = '{flatNoR}'""")
                 st.write(f"Flat - {flatNoR} successfully removed.")
-                with st.spinner(text='Updating Data... Please Wait...!'):
-                    am.get_flatDf.clear()
+                st.experimental_memo.clear()
                 st.experimental_rerun()
 
 else:

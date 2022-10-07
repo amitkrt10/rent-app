@@ -43,7 +43,7 @@ if "login" in st.session_state.keys():
                 am.runSql(f"""INSERT INTO public.exit_statement (flat_tenant, transaction_date, bill, payment, due) VALUES ('{flatTenant}','{paymentDate}','0','{amount}','{finalDue}')""")
                 st.write(f"{amount} recieved from {flatTenant}")
                 time.sleep(3)
-                am.get_exitDueDict.clear()
+                st.experimental_memo.clear()
                 st.experimental_rerun()
 
     #View Final Exit Bills

@@ -5,6 +5,7 @@ import adminModules as am
 import time
 from babel.numbers import format_number
 import appPlots as ap
+import pywhatkit
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -23,6 +24,7 @@ if "login" in st.session_state.keys():
         meterDf, readingMonthList = st.session_state["meterDf"], st.session_state["readingMonthList"]
         statementDf = st.session_state["statementDf"]
         newTenantFlats = st.session_state["newTenantFlats"]
+        whatsappData = st.session_state["whatsappData"]
         st.balloons()
 
     upBillingDate = date.today() - dateutil.relativedelta.relativedelta(months=1)
@@ -62,10 +64,7 @@ if "login" in st.session_state.keys():
                         st.write(f"Bill created for {x}")
                     st.write('Done!')
                     time.sleep(3)
-                    am.get_billDf.clear()
-                    am.get_collectionDf.clear()
-                    am.get_statementDf.clear()
-                    am.get_currentDueDf.clear()
+                    st.experimental_memo.clear()
                     st.experimental_rerun()
 
     # View Bills
@@ -126,6 +125,20 @@ if "login" in st.session_state.keys():
             cellFontSize = 40
             alignList = ['center','right','right','right']
             ap.plot_table_with_total(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+
+    # View Statments
+    with st.expander("Send Reminder"):
+        selectedFlatWa = st.selectbox("Select Flat No.",activeFlatList+["Select"],index=len(activeFlatList+["Select"])-1,key="waflats")
+        if selectedFlatWa == "Select":
+            st.write("Select a flat!")
+        else:
+            detailList = whatsappData[selectedFlatWa]
+            st.write(f"Current Due = ₹ {detailList[2]}")
+            if st.button("Send Reminder"):
+                messages = f"REMINDER!!!\n\nHi, {detailList[0]}\nYour Current Rent Due = ₹ {detailList[2]}\nPlease pay at the earliest\n\nThanks\nKartikey Bhawan"
+                pywhatkit.sendwhatmsg_instantly(f"+918837245956", messages)
+                st.write(f"Reminder sent to {selectedFlatWa}")
+
 
 else:
     st.error("Please Login First...!")

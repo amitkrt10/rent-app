@@ -6,3 +6,4 @@ psycopg2_binary==2.9.3
 python_dateutil==2.8.2
 streamlit==1.12.2
 streamlit_authenticator==0.2.1
+pywhatkit==5.3

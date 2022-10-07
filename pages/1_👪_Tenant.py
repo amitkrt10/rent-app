@@ -73,8 +73,7 @@ if "login" in st.session_state.keys():
                 am.runSql(f"""INSERT INTO public.active_tenants(flat_no, tenant_name, mobile, security_deposite, rent_amount, water_charge, garbage_charge, previous_due, initial_meter_reading, date_of_ocupancy, password, username) VALUES ('{flatNo}','{tenantName}','{tenantMobile}','{securityDeposite}','{rentAmt}','{waterCharge}','{garbageCharge}','{previousDue}','{initialMeterReading}','{dateOfOccupancy}','{password}','{str(tenantMobile)}')""")
                 st.write(f"Details of {tenantName} successfully added to Flat No. {flatNo}")
                 time.sleep(3)
-                with st.spinner(text='Updating Data... Please Wait...!'):
-                    st.experimental_memo.clear()
+                st.experimental_memo.clear()
                 st.experimental_rerun()
 
     #Remove Tenant Form
