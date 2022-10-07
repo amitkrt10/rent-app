@@ -3,8 +3,8 @@ import pandas as pd
 import psycopg2
 import streamlit as st
 from babel.numbers import format_number
-import webbrowser
-from urllib.parse import quote
+# import urllib.request
+# from urllib.parse import quote
 # from twilio.rest import Client
 import warnings
 warnings.filterwarnings("ignore")
@@ -426,5 +426,6 @@ def get_whatsappData():
 #     client = Client(TWILIO_SSID,TWILIO_API_KEY)
 #     client.messages.create(body=body,from_='whatsapp:+14155238886',to=f'whatsapp:+91{mobile}')
 
-def send_whatsapp_msg(phone_no,message):
-    webbrowser.open(f"https://web.whatsapp.com/send?phone=+91{phone_no}&text={quote(message)}", new=2)
+# def send_whatsapp_msg(phone_no,message):
+    # urllib.request.urlopen(f"https://web.whatsapp.com/send?phone=+91{phone_no}&text={quote(message)}")
+    # webbrowser.open(f"https://web.whatsapp.com/send?phone=+91{phone_no}&text={quote({message})}")

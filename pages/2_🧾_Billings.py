@@ -4,6 +4,7 @@ import dateutil.relativedelta
 import adminModules as am
 import time
 from babel.numbers import format_number
+from urllib.parse import quote
 import appPlots as ap
 # import pywhatkit
 import warnings
@@ -134,10 +135,11 @@ if "login" in st.session_state.keys():
         else:
             detailList = whatsappData[selectedFlatWa]
             st.write(f"Current Due = ₹ {detailList[2]}")
-            if st.button("Send Reminder"):
-                messages = f"REMINDER!!!\n\nHi, {detailList[0]}\nYour Current Rent Due = ₹ {detailList[2]}\nPlease pay at the earliest\n\nThanks\nKartikey Bhawan"
-                am.send_whatsapp_msg(detailList[1],messages)
-                st.write(f"Reminder sent to {selectedFlatWa}")
+            messages = f"REMINDER!!!\n\nHi, {detailList[0]}\nYour Current Rent Due = ₹ {detailList[2]}\nPlease pay at the earliest\n\nThanks\nKartikey Bhawan"
+            st.write(f"[Send Reminder](https://web.whatsapp.com/send?phone=+91{detailList[1]}&text={quote(messages)})")
+            # if st.button("Send Reminder"):
+                # messages = f"REMINDER!!!\n\nHi, {detailList[0]}\nYour Current Rent Due = ₹ {detailList[2]}\nPlease pay at the earliest\n\nThanks\nKartikey Bhawan"
+                # st.write(f"Reminder sent to {selectedFlatWa}")
 
 
 else:
