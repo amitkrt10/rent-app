@@ -410,6 +410,7 @@ def get_whatsappData():
         on t.flat_no = b.flat_no
         left join (select flat_no, sum(amount) as total_payment from public.payments group by 1) p
         on t.flat_no = p.flat_no
+        where t.previous_due+coalesce(b.total_bill,0)-coalesce(p.total_payment,0) > 1000
         order by t.flat_no"""
     cursor.execute(sql)
     result = cursor.fetchall()
