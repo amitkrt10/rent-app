@@ -129,7 +129,7 @@ if "login" in st.session_state.keys():
 
     # View Statments
     with st.expander("Send Reminder"):
-        waFlatList = whatsappData.keys()
+        waFlatList = list(whatsappData.keys())
         selectedFlatWa = st.selectbox("Select Flat No.",waFlatList+["Select"],index=len(waFlatList+["Select"])-1,key="waflats")
         if selectedFlatWa == "Select":
             st.write("Select a flat!")
