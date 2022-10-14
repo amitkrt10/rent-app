@@ -100,7 +100,7 @@ if "login" in st.session_state.keys():
                 cellFontSize = 30
                 alignList = ['left','right']
                 ap.plot_table_with_title_total(title_text,subtitle_text,column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
-                st.write(f"Your total rent due for the month of {selectMonth} is ₹ {viewList[8]}. Please pay the rent before 06/{viewList[0].strftime('%m/%Y')}. You can now view your bills and statements at https://tinyurl.com/kb-tenants-app . Your username is {userId} and password is {pw}")
+                st.write(f"Your total rent due for the month of {selectMonth} is ₹ {viewList[8]}. Please pay the rent before 06/{viewList[0].strftime('%m/%Y')}. You can now view your bills and statements at https://kb-tenant.streamlitapp.com . Your username is {userId} and password is {pw}")
             except:
                 st.write("Bill Not Available")
 
@@ -145,4 +145,4 @@ if "login" in st.session_state.keys():
 
 else:
     st.error("Please Login First...!")
-    st.markdown("[Login](https://amitkrt10-rent-app-1--home-8wtbg6.streamlitapp.com/)")
+    st.markdown("[Login](https://kb-owner.streamlitapp.com/)")

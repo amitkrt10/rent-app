@@ -94,3 +94,7 @@ if "login" in st.session_state.keys():
             cellFontSize = 40
             alignList = ['center','right','right','right']
             ap.plot_table_with_total(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+
+else:
+    st.error("Please Login First...!")
+    st.markdown("[Login](https://kb-owner.streamlitapp.com/)")
