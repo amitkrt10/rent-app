@@ -1,4 +1,5 @@
 import streamlit as st
+import subprocess
 import adminModules as am
 import appPlots as ap
 import streamlit_authenticator as stauth
@@ -94,5 +95,6 @@ if authentication_status:
     ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
 
     if st.sidebar.button("Refresh Data",key="clearCache"):
+        subprocess.run(["python", "refresh_data.py"])
         st.experimental_memo.clear()
         st.experimental_rerun()
