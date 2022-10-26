@@ -23,32 +23,15 @@ def list_diff(list1,list2):
     return diff_list
 
 def runSql(sql):
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     conn.autocommit = True
-    #Creating a cursor object using the cursor() method
     cursor = conn.cursor()
-    #Creating a database
     cursor.execute(sql)
     conn.commit()
-    #Closing the connection
     conn.close()
 
 @st.experimental_memo
 def get_tenantDf():
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     tenantDf = pd.read_sql('''SELECT * FROM public.active_tenants ORDER BY flat_no''', con=conn)
     tenantDf.set_index('flat_no',inplace=True)
@@ -67,13 +50,6 @@ def get_tenantDf():
 
 @st.experimental_memo
 def get_exitTenantDf():
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     exitTenantDf = pd.read_sql('''SELECT * FROM public.inactive_tenant order by out_date desc''', con=conn)
     exitTenantDf.set_index('flat_tenant',inplace=True)
@@ -84,13 +60,6 @@ def get_exitTenantDf():
 
 @st.experimental_memo
 def get_billDf():
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     billDf = pd.read_sql('''SELECT * FROM public.bills''', con=conn)
     billDf.set_index('flat_no',inplace=True)
@@ -103,25 +72,10 @@ def get_billDf():
 
 @st.experimental_memo
 def get_meterDf():
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
-    sql = '''select
-        flat_no,
-        reading_month,
-        readings
-        from meter_reading
+    sql = '''select flat_no, reading_month, readings from meter_reading
         union
-        select
-        flat_no,
-        '00/0000' as reading_month,
-        initial_meter_reading as readings
-        from active_tenants
+        select flat_no, '00/0000' as reading_month, initial_meter_reading as readings from active_tenants
         order by 1,2'''
     meterDf = pd.read_sql(sql, con=conn)
     meterDf.set_index('flat_no',inplace=True)
@@ -134,13 +88,6 @@ def get_meterDf():
 
 @st.experimental_memo
 def get_paymentDf():
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     paymentDf = pd.read_sql('''SELECT * FROM public.payments''', con=conn)
     paymentDf.set_index('flat_no',inplace=True)
@@ -153,13 +100,6 @@ def get_paymentDf():
 
 @st.experimental_memo
 def get_flatDf():
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     flatDf = pd.read_sql('''SELECT * FROM public.flats ORDER BY flat_no''', con=conn)
     flatDf.set_index('flat_no',inplace=True)
@@ -174,13 +114,6 @@ def get_flatDf():
 
 @st.experimental_memo
 def get_collectionDf():
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     sql = '''select
         p.payment_month,
@@ -208,13 +141,6 @@ def get_collectionDf():
 
 @st.experimental_memo
 def get_statementDf():
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     sql = '''select flat_no, t_date, bill, payment,
         SUM(tempdiff) OVER (partition by flat_no ORDER BY t_date) AS dues
@@ -233,13 +159,6 @@ def get_statementDf():
 
 @st.experimental_memo
 def get_currentDueDf():
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     sql = '''select t.flat_no, t.tenant_name, t.previous_due+coalesce(b.total_bill,0)-coalesce(p.total_payment,0) as dues
         from public.active_tenants t
@@ -256,13 +175,6 @@ def get_currentDueDf():
 
 @st.experimental_memo
 def get_exitDueDict():
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cursor = conn.cursor()
     sql = '''select es.flat_tenant, es.due as mtd, it.mobile from public.exit_statement es
@@ -272,7 +184,6 @@ def get_exitDueDict():
         order by 2'''
     cursor.execute(sql)
     result = cursor.fetchall()
-    #Closing the connection
     conn.close()
     exitDueDict = {}
     for x in result:
@@ -288,13 +199,6 @@ def get_exitDueDict():
 
 @st.experimental_memo
 def get_consumption():
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cursor = conn.cursor()
     cursor.execute('''select flat_no, readings from public.meter_reading order by 1, 2 desc''')
@@ -323,31 +227,16 @@ def get_consumption():
 
 @st.experimental_memo
 def get_loginCredential():
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cursor = conn.cursor()
     cursor.execute('''SELECT flat_no, username, password FROM public.active_tenants''')
     result = cursor.fetchall()
     credential = list(map(list, zip(*result)))
-    #Closing the connection
     conn.close()
     return credential
 
 @st.experimental_memo
 def get_bankStatement():
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     sql = '''with summary as (
         select transaction_date, deposit, withdrawal, deposit - withdrawal as temp_diff, remark
@@ -382,13 +271,6 @@ def get_bankStatement():
 
 @st.experimental_memo
 def get_tenantInfo():
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cursor = conn.cursor()
     cursor.execute("""select flat_no, tenant_name, mobile, security_deposite, rent_amount, water_charge, garbage_charge, date_of_ocupancy from public.active_tenants""")
@@ -401,13 +283,6 @@ def get_tenantInfo():
 
 @st.experimental_memo
 def get_whatsappData():
-    # read the connection parameters
-    HOST= st.secrets["HOST"]
-    DATABASE= st.secrets["DATABASE"]
-    USER= st.secrets["USER"]
-    PORT= st.secrets["PORT"]
-    PASSWORD= st.secrets["PASSWORD"]
-    # connect to the PostgreSQL server
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cursor = conn.cursor()
     sql = """select t.flat_no, t.tenant_name, t.mobile, t.previous_due+coalesce(b.total_bill,0)-coalesce(p.total_payment,0) as dues
