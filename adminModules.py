@@ -1,13 +1,19 @@
 from unittest import result
+import io
+import requests
 import pandas as pd
 import psycopg2
+import psycopg2.extras as extras
 import streamlit as st
 from babel.numbers import format_number
-# import urllib.request
-# from urllib.parse import quote
-# from twilio.rest import Client
 import warnings
 warnings.filterwarnings("ignore")
+
+HOST= st.secrets["HOST"]
+DATABASE= st.secrets["DATABASE"]
+USER= st.secrets["USER"]
+PORT= st.secrets["PORT"]
+PASSWORD= st.secrets["PASSWORD"]
 
 def list_diff(list1,list2):
     diff_list = []
@@ -420,13 +426,31 @@ def get_whatsappData():
         whatsappData[x[0]]=x[1:]
     return whatsappData
 
-# def send_whatsapp_msg(body,mobile):
-#     mobile=8918104083
-#     TWILIO_SSID=st.secrets["TWILIO_SSID"]
-#     TWILIO_API_KEY=st.secrets["TWILIO_API_KEY"]
-#     client = Client(TWILIO_SSID,TWILIO_API_KEY)
-#     client.messages.create(body=body,from_='whatsapp:+14155238886',to=f'whatsapp:+91{mobile}')
+# Add records to database
+def insert_values(df):
+    conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
+    cursor = conn.cursor()
+    tuples = [tuple(x) for x in df.to_numpy()]
+    cols = ','.join(list(df.columns))
+    query = "INSERT INTO %s(%s) VALUES %%s" % ('public.bank_statement', cols)
+    cursor = conn.cursor()
+    try:
+        extras.execute_values(cursor, query, tuples)
+        conn.commit()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print("Error: %s" % error)
+        conn.rollback()
+        cursor.close()
+        return 1
+    st.write(f"{len(df)} records inserted")
+    cursor.close()
 
-# def send_whatsapp_msg(phone_no,message):
-    # urllib.request.urlopen(f"https://web.whatsapp.com/send?phone=+91{phone_no}&text={quote(message)}")
-    # webbrowser.open(f"https://web.whatsapp.com/send?phone=+91{phone_no}&text={quote({message})}")
+def get_diff_df():
+    conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
+    dbDf = pd.read_sql('''SELECT * FROM public.bank_statement ORDER BY transaction_date''', con=conn)
+    GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1srCRDJ53Zf-TxQGW3jWuyG2PgM3Le46L2Jr-iCyLPWg/export?format=csv&gid=1759634673"
+    s = requests.get(GOOGLE_SHEET_URL).content
+    gsheetDf = pd.read_csv(io.StringIO(s.decode('utf-8')))
+
+    common = gsheetDf.merge(dbDf,on=['narration'])
+    return gsheetDf[(~gsheetDf.narration.isin(common.narration))]
