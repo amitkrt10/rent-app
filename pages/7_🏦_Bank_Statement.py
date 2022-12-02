@@ -55,7 +55,7 @@ if "login" in st.session_state.keys():
     ]
     #layout=go.Layout(title=go.layout.Title(text=f"<b>{tenantName}</b> | Flat No. : <b>{flatNo}</b>"))
     )
-    fig.update_layout(width=370, height=(100+((lendf+2)*30)), margin=dict(l=0, r=0, t=50, b=0))
+    fig.update_layout(width=370, height=(100+((15+2)*30)), margin=dict(l=0, r=0, t=50, b=0))
     st.write(fig)
 
     csv = bankDf.to_csv(index=False).encode('utf-8')
