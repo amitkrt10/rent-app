@@ -45,7 +45,7 @@ if "login" in st.session_state.keys():
         height=40
     ),
     cells=dict(
-        values=bankDf.T.values,
+        values=bankDf.tail(15).T.values,
         line_color='darkslategray',
         fill=dict(color=['paleturquoise', 'white', 'white', '#8AD88D', '#EAECEE']),
         align=['right', 'right', 'right', 'right', 'left'],
