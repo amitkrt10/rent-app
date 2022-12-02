@@ -331,3 +331,13 @@ def get_diff_df():
 
     common = gsheetDf.merge(dbDf,on=['narration'])
     return gsheetDf[(~gsheetDf.narration.isin(common.narration))]
+
+@st.experimental_memo
+def get_cash_data():
+    GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1srCRDJ53Zf-TxQGW3jWuyG2PgM3Le46L2Jr-iCyLPWg/export?format=csv&gid=2094692059"
+    s = requests.get(GOOGLE_SHEET_URL).content
+    cashCredit = pd.read_csv(io.StringIO(s.decode('utf-8')))
+    GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1srCRDJ53Zf-TxQGW3jWuyG2PgM3Le46L2Jr-iCyLPWg/export?format=csv&gid=1362439864"
+    s = requests.get(GOOGLE_SHEET_URL).content
+    cashDebit = pd.read_csv(io.StringIO(s.decode('utf-8')))
+    return cashCredit, cashDebit
