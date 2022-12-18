@@ -128,7 +128,8 @@ def get_collectionDf():
         left join (select bill_month, sum(fulltotal) as bill_total from public.bills group by 1) b
         on p.payment_month = b.bill_month
         group by 1,6
-        order by 1 desc'''
+        order by 1 desc
+        limit 6'''
     collectionDf = pd.read_sql(sql, con=conn)
     collectionDf["ratio"] = (collectionDf["total_payment"]/collectionDf["bill_total"])*100
     collectionDf["ratio"] = collectionDf["ratio"].astype(int)
