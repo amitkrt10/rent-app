@@ -55,6 +55,7 @@ def get_tenantStatementDf(flatNo):
         select flat_no, bill_date as t_date, total as bill, 0 as payment from public.bills where flat_no = '{flatNo}'
         union
         select flat_no, payment_date as t_date, 0 as bill, amount as payment from public.payments where flat_no = '{flatNo}'
+        group by 1,2,3
         order by 1,2) st) raw'''
     tenantStatementDf = pd.read_sql(sql, con=conn)
     conn.close()
