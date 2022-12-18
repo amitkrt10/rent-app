@@ -1,6 +1,7 @@
 import streamlit as st
 import adminModules as am
 import appPlots as ap
+import pandas as pd
 import streamlit_authenticator as stauth
 from babel.numbers import format_number
 import warnings
@@ -48,11 +49,15 @@ if authentication_status:
         st.balloons()
 
     # Current Dues.
-    currentDueDf.loc[len(currentDueDf.index)] = ["Total",totalCurrentDue]
+    occupied_flats = len(currentDueDf)
+    due_flats = len(currentDueDf[currentDueDf["dues"]>0])
+    total_row = {"tenant_name":"Total","dues":totalCurrentDue}
+    currentDueDf1 = currentDueDf.append(pd.DataFrame([total_row],index=[f"{due_flats}/{occupied_flats}"],columns=currentDueDf.columns))
+    # currentDueDf.loc[len(currentDueDf.index)] = ["Total",totalCurrentDue]
     st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Current Dues = ₹ {format_number(totalCurrentDue, locale='en_IN')}</h3>", unsafe_allow_html=True)
     #Show Table
     column_headers = ['Flat','Tenant Name','Dues']
-    cellText = currentDueDf[currentDueDf["dues"]>0].to_records()
+    cellText = currentDueDf1[currentDueDf1["dues"]>0].to_records()
     colWidths = [1,3,2]
     scaleY = 15
     headerFontSize = 80
