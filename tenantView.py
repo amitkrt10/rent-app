@@ -94,7 +94,7 @@ if authentication_status:
     #Service Providers
     st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Service Providers</h3>", unsafe_allow_html=True)
     column_headers = ['Service','Name', 'Contact']
-    cellText = [['Electrician','Bijay','75010 77783'],['Plumber','Bapan','96412 23532'],['Painter','Ashok Kaku','99337 61483'],['Carpenter','Meghnath','98326 96055'],['Internet | Wifi | Cable','Amit','98320 38570']]
+    cellText = [['Electrician','Bijay','75010 77783'],['Plumber','Bapan','96412 23532'],['Painter','Ashok Kaku','99337 61483'],['Carpenter','Meghnath','98326 96055']]
     colWidths = [1,1,1]
     scaleY = 6
     headerFontSize = 30
