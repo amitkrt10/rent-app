@@ -104,7 +104,7 @@ if authentication_status:
     st.error("Please inform the owner before making any changes or repair to the property")
 
     st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Owner Details</h3>", unsafe_allow_html=True)
-    st.markdown("<h6 style='font-style: oblique;'>R N Thakur - [70051 43261](tel:+917005143261)</h6>", unsafe_allow_html=True)
+    st.markdown("<h6 style='font-style: oblique;'>R N Thakur</h6>", unsafe_allow_html=True)
     st.markdown("[70051 43261](tel:+917005143261)")
     st.markdown("<h6 style='font-style: oblique;'>Amit Kumar</h6>", unsafe_allow_html=True)
     st.markdown("[89181 04083](tel:+918918104083)")
