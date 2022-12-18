@@ -152,7 +152,8 @@ def get_statementDf():
         union
         select flat_no, bill_date as t_date, total as bill, 0 as payment from public.bills
         union
-        select flat_no, payment_date as t_date, 0 as bill, amount as payment from public.payments
+        select flat_no, payment_date as t_date, 0 as bill, sum(amount) as payment from public.payments
+        group by 1,2,3
         order by 1,2) st) raw'''
     statementDf = pd.read_sql(sql, con=conn)
     statementDf.set_index('flat_no',inplace=True)
