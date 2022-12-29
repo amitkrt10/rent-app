@@ -97,7 +97,7 @@ if "login" in st.session_state.keys():
                 dateOfOccupancy = tenantDf[tenantDf.index==selectedFlat]['date_of_ocupancy'].values[0]
                 meterCharge = (int(finalMeterReading) - meterDf[meterDf.index==selectedFlat]["readings"].max()) * 10
                 tenantSecurity = tenantDf[tenantDf.index==selectedFlat]['security_deposite'].values[0]
-                finalDue = int(rentAmt) + int(meterCharge) + int(waterCharge) + int(otherCharges) + currentDue - tenantSecurity
+                finalDue = int(rentAmt) + int(meterCharge) + int(waterCharge) + int(garbageCharge) + int(otherCharges) + currentDue - tenantSecurity
                 am.runSql(f"""INSERT INTO public.inactive_tenant (flat_tenant, mobile, in_date, out_date, final_reading, final_rent, final_meter, final_water, final_garbage, final_other, security_deposite, final_due, remark, previous_due) VALUES ('{flatTenant}', '{tenantMobile}', '{dateOfOccupancy}', '{exitDate}', '{finalMeterReading}', '{rentAmt}', '{meterCharge}', '{waterCharge}', '{garbageCharge}', '{otherCharges}', '{tenantSecurity}', '{finalDue}', '{remark}','{currentDue}')""")
                 st.write("Exit Tenant Table - Updated!")
                 sql = f"""insert into public.exit_statement
