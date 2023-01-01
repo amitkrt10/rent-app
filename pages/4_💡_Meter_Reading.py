@@ -79,7 +79,7 @@ if "login" in st.session_state.keys():
 
     #Electricity Consumptions by Flat
     with st.expander("Electricity Consumptions by Flat"):
-        title = 'Electricity Consumption'
+        title = f'Electricity Consumption - {upBillingMonth}'
         x_data = consumptionDict.keys()
         y_data = consumptionDict.values()
         bar_width = 0.6
