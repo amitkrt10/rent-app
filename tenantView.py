@@ -1,6 +1,7 @@
 import streamlit as st
 import tenantModules as tm
 import appPlots as ap
+import pandas as pd
 import streamlit_authenticator as stauth
 from babel.numbers import format_number
 import warnings
@@ -13,6 +14,12 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state='collapsed'
 )
+def add_stream_url(phone_num):
+	return [f'tel:+91{n}' for n in phone_num]
+
+def make_clickable(url):
+    text = url[-10:]
+    return f'<a target="_blank" href="{url}">{text}</a>'
 
 st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: oblique;'>KARTIKEY BHAWAN</h1>", unsafe_allow_html=True)
 
@@ -91,25 +98,25 @@ if authentication_status:
     alignList = ['left','right']
     ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
 
+    pd.set_option('display.max_colwidth', -1)
+
     #Service Providers
     st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Service Providers</h3>", unsafe_allow_html=True)
-    column_headers = ['Service','Name', 'Contact']
-    cellText = [['Electrician','Bijay','75010 77783'],['Plumber','Bapan','96412 23532'],['Painter','Ashok Kaku','99337 61483'],['Carpenter','Meghnath','98326 96055']]
-    colWidths = [1,1,1]
-    scaleY = 6
-    headerFontSize = 30
-    cellFontSize = 30
-    alignList = ['left','left','right']
-    ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+    data = {'Name':['Bijay','Bapan','Ashok Kaku','Meghnath'],
+            'Number':[7501077783,9641223532,9933761483,9832696055]}
+    df = pd.DataFrame(data, index=['Electrician','Plumber','Painter','Carpenter'])
+    df['Phone'] = add_stream_url(df['Number'])
+    df['Phone'] = df['Phone'].apply(make_clickable)
+    st.write(df[['Name','Phone']].to_html(escape = False), unsafe_allow_html = True)
     st.error("Please inform the owner before making any changes or repair to the property")
 
     st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Owner Details</h3>", unsafe_allow_html=True)
-    st.markdown("<h6 style='font-style: oblique;'>R N Thakur</h6>", unsafe_allow_html=True)
-    st.markdown("[70051 43261](tel:+917005143261)")
-    st.markdown("<h6 style='font-style: oblique;'>Amit Kumar</h6>", unsafe_allow_html=True)
-    st.markdown("[89181 04083](tel:+918918104083)")
-
-
+    data = {'Name':['RN Thakur','Amit','Santosh'],
+            'Number':[7005143261,8918104083,9036023003]}
+    df1 = pd.DataFrame(data, index=[1,2,3])
+    df1['Phone'] = add_stream_url(df1['Number'])
+    df1['Phone'] = df1['Phone'].apply(make_clickable)
+    st.write(df1[['Name','Phone']].to_html(escape = False), unsafe_allow_html = True)
 
 elif authentication_status == False:
     st.error('Username/password is incorrect')
