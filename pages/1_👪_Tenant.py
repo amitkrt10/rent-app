@@ -25,14 +25,18 @@ if "login" in st.session_state.keys():
 
     #Active Tenants
     with st.expander("Active Tenants"):
-        column_headers = ["Flat","Tenant Name","Contact"]
-        cellText = tenantDf[['tenant_name','mobile']].to_records()
-        colWidths = [1,3,2]
-        scaleY = 15
-        headerFontSize = 100
-        cellFontSize = 80
-        alignList = ['center','left','center']
-        ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+        df1 = tenantDf[['tenant_name','mobile']]
+        df1['Phone'] = ap.add_stream_url(df1['mobile'])
+        df1['Phone'] = df1['Phone'].apply(ap.make_clickable)
+        st.write(df1[['tenant_name','Phone']].to_html(escape = False), unsafe_allow_html = True)
+        # column_headers = ["Flat","Tenant Name","Contact"]
+        # cellText = tenantDf[['tenant_name','mobile']].to_records()
+        # colWidths = [1,3,2]
+        # scaleY = 15
+        # headerFontSize = 100
+        # cellFontSize = 80
+        # alignList = ['center','left','center']
+        # ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
 
     #Tenants Info
     with st.expander("Tenants Info"):

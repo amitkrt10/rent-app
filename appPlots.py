@@ -192,3 +192,10 @@ def plot_bar(title,x_data,y_data,bar_width,x_rotate,fontsize):
             fontsize=fontsize)
     plt.xticks(rotation = x_rotate)
     st.pyplot(fig)
+
+def add_stream_url(phone_num):
+    return [f'tel:+91{n}' for n in phone_num]
+
+def make_clickable(url):
+    text = url[-10:]
+    return f'<a target="_blank" href="{url}">{text}</a>'
