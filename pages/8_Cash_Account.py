@@ -21,8 +21,17 @@ if "login" in st.session_state.keys():
     debit = cashDebit["Amount"].sum()
     cashInHand = credit - debit
     st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Cash in Hand = ₹ {format_number(cashInHand, locale='en_IN')}</h3>", unsafe_allow_html=True)
-    st.write(f"Cash Credit = ₹ {credit}")
-    st.write(f"Cash Debit = ₹ {debit}")
+    # st.write(f"Cash Credit = ₹ {credit}")
+    # st.write(f"Cash Debit = ₹ {debit}")
+    #Show Table
+    column_headers = ['Credit','Debit']
+    cellText = [[f"₹ {format_number(credit, locale='en_IN')}",f"₹ {format_number(debit, locale='en_IN')}"]]
+    colWidths = [1,1]
+    scaleY = 8
+    headerFontSize = 50
+    cellFontSize = 30
+    alignList = ['center','center']
+    ap.plot_table_with_total(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
     
     with st.expander("Cash Credit"):
         column_headers = ["Date","Credit","Remarks"]
