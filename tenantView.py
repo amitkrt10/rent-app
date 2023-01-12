@@ -99,24 +99,25 @@ if authentication_status:
     ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
 
     pd.set_option('display.max_colwidth', -1)
+    col1, col2 = st.columns(2)
 
     #Service Providers
-    st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Service Providers</h3>", unsafe_allow_html=True)
+    col1.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Service Providers</h3>", unsafe_allow_html=True)
     data = {'Name':['Bijay','Bapan','Ashok Kaku','Meghnath'],
             'Number':[7501077783,9641223532,9933761483,9832696055]}
     df = pd.DataFrame(data, index=['Electrician','Plumber','Painter','Carpenter'])
     df['Phone'] = add_stream_url(df['Number'])
     df['Phone'] = df['Phone'].apply(make_clickable)
-    st.write(df[['Name','Phone']].to_html(escape = False), unsafe_allow_html = True)
-    st.error("Please inform the owner before making any changes or repair to the property")
+    col1.write(df[['Name','Phone']].to_html(escape = False), unsafe_allow_html = True)
+    col1.info("Please inform the owner before making any changes or repair to the property")
 
-    st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Owner Details</h3>", unsafe_allow_html=True)
+    col2.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Owner Details</h3>", unsafe_allow_html=True)
     data = {'Name':['RN Thakur','Amit','Santosh'],
             'Number':[7005143261,8918104083,9036023003]}
     df1 = pd.DataFrame(data, index=[1,2,3])
     df1['Phone'] = add_stream_url(df1['Number'])
     df1['Phone'] = df1['Phone'].apply(make_clickable)
-    st.write(df1[['Name','Phone']].to_html(escape = False), unsafe_allow_html = True)
+    col2.write(df1[['Name','Phone']].to_html(escape = False), unsafe_allow_html = True)
 
 elif authentication_status == False:
     st.error('Username/password is incorrect')
