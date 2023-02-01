@@ -185,7 +185,7 @@ def get_exitDueDict():
         left join public.inactive_tenant it on es.flat_tenant = it.flat_tenant
         where concat(es.flat_tenant,es.transaction_date) in 
         (select concat(flat_tenant,mtd) from (select flat_tenant, max(transaction_date) as mtd from public.exit_statement group by 1)mxd)
-        order by 2'''
+        order by 2 desc'''
     cursor.execute(sql)
     result = cursor.fetchall()
     conn.close()
