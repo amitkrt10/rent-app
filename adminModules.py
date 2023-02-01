@@ -77,7 +77,7 @@ def get_meterDf():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     sql = '''select flat_no, reading_month, readings from meter_reading
         union
-        select flat_no, '00/0000' as reading_month, initial_meter_reading as readings from active_tenants
+        select flat_no, '0000/00' as reading_month, initial_meter_reading as readings from active_tenants
         order by 1,2'''
     meterDf = pd.read_sql(sql, con=conn)
     meterDf.set_index('flat_no',inplace=True)

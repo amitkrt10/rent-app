@@ -29,7 +29,7 @@ if "login" in st.session_state.keys():
         st.balloons()
 
     upBillingDate = date.today() - dateutil.relativedelta.relativedelta(months=1)
-    upBillingMonth = upBillingDate.strftime("%m/%Y")
+    upBillingMonth = upBillingDate.strftime("%Y/%m")
 
     st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Billings</h2>", unsafe_allow_html=True)
 
@@ -92,7 +92,7 @@ if "login" in st.session_state.keys():
                 cellText.append(["Total",viewList[8]])
 
                 title_text = f'{tenantName}'
-                subtitle_text = f'** Pay Before 06/{viewList[0].strftime("%m/%Y")}'
+                subtitle_text = f'** Pay Before 06/{viewList[0].strftime("%Y/%m")}'
                 column_headers = [selectedFlat,selectMonth]
                 colWidths = [1,1]
                 scaleY = 5
@@ -100,7 +100,7 @@ if "login" in st.session_state.keys():
                 cellFontSize = 30
                 alignList = ['left','right']
                 ap.plot_table_with_title_total(title_text,subtitle_text,column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
-                st.code(f"Your total rent due for the month of {selectMonth} is ₹ {viewList[8]}. Please pay the rent before 06/{viewList[0].strftime('%m/%Y')}. You can now view your bills and statements at https://kb-tenant.streamlitapp.com . Your username is {userId} and password is {pw}")
+                st.code(f"Your total rent due for the month of {selectMonth} is ₹ {viewList[8]}. Please pay the rent before 06/{viewList[0].strftime('Y/%m')}. You can now view your bills and statements at https://kb-tenant.streamlitapp.com . Your username is {userId} and password is {pw}")
             except:
                 st.write("Bill Not Available")
 

@@ -22,7 +22,7 @@ if "login" in st.session_state.keys():
         st.balloons()
 
     upBillingDate = date.today() - dateutil.relativedelta.relativedelta(months=1)
-    upBillingMonth = upBillingDate.strftime("%m/%Y")
+    upBillingMonth = upBillingDate.strftime("%Y/%m")
 
     st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Electricity</h2>", unsafe_allow_html=True)
 

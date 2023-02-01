@@ -31,7 +31,7 @@ if "login" in st.session_state.keys():
             mode = st.radio("Payment Mode",["Cash","Online Transfer","Adjustment"],horizontal=True)
             submitted = st.form_submit_button("Submit")
             if submitted:
-                paymentMonth = (paymentDate- dateutil.relativedelta.relativedelta(months=1)).strftime("%m/%Y")
+                paymentMonth = (paymentDate- dateutil.relativedelta.relativedelta(months=1)).strftime("%Y/%m")
                 am.runSql(f"""INSERT INTO public.payments(flat_no, payment_date, payment_month, amount, payment_mode) VALUES ('{flatNo}','{paymentDate}','{paymentMonth}','{amount}','{mode}')""")
                 st.write(f"₹ {amount} recieved from {tenantDf[tenantDf.index==flatNo]['tenant_name'].values[0]} by {mode}")
                 time.sleep(3)
