@@ -89,15 +89,15 @@ if authentication_status:
     ap.plot_table_with_total(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
 
     #Bank Account Breakups
-    st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Cash in Bank</h3>", unsafe_allow_html=True)
-    column_headers = ['Account','Balance']
-    cellText = bankAccountDf
-    colWidths = [1,1]
-    scaleY = 7
-    headerFontSize = 50
-    cellFontSize = 50
-    alignList = ['left','right']
-    ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+    # st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Cash in Bank</h3>", unsafe_allow_html=True)
+    # column_headers = ['Account','Balance']
+    # cellText = bankAccountDf
+    # colWidths = [1,1]
+    # scaleY = 7
+    # headerFontSize = 50
+    # cellFontSize = 50
+    # alignList = ['left','right']
+    # ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
 
     if st.sidebar.button("Refresh Data",key="clearCache"):
         subDf = am.get_diff_df()
