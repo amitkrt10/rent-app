@@ -43,7 +43,10 @@ if "login" in st.session_state.keys():
                 am.runSql(f"""INSERT INTO public.exit_statement (flat_tenant, transaction_date, bill, payment, due) VALUES ('{flatTenant}','{paymentDate}','0','{amount}','{finalDue}')""")
                 st.write(f"{amount} recieved from {flatTenant}")
                 time.sleep(3)
-                st.experimental_memo.clear()
+                am.get_exitTenantDf().clear()
+                am.get_exitDueDict().clear()
+                st.session_state["exitTenantDf"], st.session_state["exitStatementDf"] = am.get_exitTenantDf()
+                st.session_state["exitDueDict"], st.session_state["exitDueList"], st.session_state["exitTenantList"], st.session_state["exitDueTotal"] = am.get_exitDueDict()
                 st.experimental_rerun()
 
     #View Final Exit Bills
@@ -73,7 +76,7 @@ if "login" in st.session_state.keys():
         alignList = ['left','right']
         ap.plot_table_with_total(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
 
-    # Exit Tenants Payments
+    # Exit Tenants Statement
     with st.expander("Exit Tenants Statement"):
         selectFlatTenant = st.selectbox("Select Flat No.",list(exitDueDict.keys())+["Select"],index=len(exitDueDict.keys())-1,key="viewexitStatement")
         if selectFlatTenant == "Select":

@@ -40,7 +40,8 @@ if "login" in st.session_state.keys():
             if submitted:
                 am.runSql(f"""INSERT INTO public.flats(flat_no, flat_type, facilities) VALUES ('{flatNo}','{flatType}','{facilities}')""")
                 st.write(f"New flat - {flatNo} successfully added.")
-                st.experimental_memo.clear()
+                am.get_flatDf().clear()
+                st.session_state["flatDf"], st.session_state["vacantFlatList"] = am.get_flatDf()
                 st.experimental_rerun()
 
     #Modify Facilities
@@ -64,7 +65,8 @@ if "login" in st.session_state.keys():
             if submitted:
                 am.runSql(f"""DELETE FROM public.flats WHERE flat_no = '{flatNoR}'""")
                 st.write(f"Flat - {flatNoR} successfully removed.")
-                st.experimental_memo.clear()
+                am.get_flatDf.clear()
+                st.session_state["flatDf"], st.session_state["vacantFlatList"] = am.get_flatDf()
                 st.experimental_rerun()
 
 else:

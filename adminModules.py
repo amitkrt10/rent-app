@@ -229,15 +229,15 @@ def get_consumption():
             consumptionDict.update({keyList[i]:valueList[i][0] - valueList[i][1]})
     return dict(sorted(consumptionDict.items(), key=lambda item: item[1]))
 
-@st.experimental_memo
-def get_loginCredential():
-    conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
-    cursor = conn.cursor()
-    cursor.execute('''SELECT flat_no, username, password FROM public.active_tenants''')
-    result = cursor.fetchall()
-    credential = list(map(list, zip(*result)))
-    conn.close()
-    return credential
+# @st.experimental_memo
+# def get_loginCredential():
+#     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
+#     cursor = conn.cursor()
+#     cursor.execute('''SELECT flat_no, username, password FROM public.active_tenants''')
+#     result = cursor.fetchall()
+#     credential = list(map(list, zip(*result)))
+#     conn.close()
+#     return credential
 
 @st.experimental_memo
 def get_bankStatement():

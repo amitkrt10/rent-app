@@ -35,7 +35,16 @@ if "login" in st.session_state.keys():
                 am.runSql(f"""INSERT INTO public.payments(flat_no, payment_date, payment_month, amount, payment_mode) VALUES ('{flatNo}','{paymentDate}','{paymentMonth}','{amount}','{mode}')""")
                 st.write(f"₹ {amount} recieved from {tenantDf[tenantDf.index==flatNo]['tenant_name'].values[0]} by {mode}")
                 time.sleep(3)
-                st.experimental_memo.clear()
+                am.get_paymentDf().clear()
+                am.get_collectionDf().clear()
+                am.get_statementDf().clear()
+                am.get_currentDueDf().clear()
+                am.get_whatsappData().clear()
+                st.session_state["paymentDf"], st.session_state["paymentMonthList"] = am.get_paymentDf()
+                st.session_state["collectionDf"] = am.get_collectionDf()
+                st.session_state["statementDf"] = am.get_statementDf()
+                st.session_state["currentDueDf"], st.session_state["totalCurrentDue"] = am.get_currentDueDf()
+                st.session_state["whatsappData"] = am.get_whatsappData()
                 st.experimental_rerun()
 
 else:
