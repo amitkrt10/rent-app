@@ -52,7 +52,8 @@ if "login" in st.session_state.keys():
             if submitted:
                 am.runSql(f"""UPDATE public.flats SET facilities = '{facilities}' WHERE flat_no = '{selectedFlat}'""")
                 st.write(f"Flat - {selectedFlat} successfully updated.")
-                st.experimental_memo.clear()
+                am.get_flatDf.clear()
+                st.session_state["flatDf"], st.session_state["vacantFlatList"] = am.get_flatDf()
                 st.experimental_rerun()
 
     #Revomve flat
