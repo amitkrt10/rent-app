@@ -40,7 +40,7 @@ if "login" in st.session_state.keys():
             if submitted:
                 am.runSql(f"""INSERT INTO public.flats(flat_no, flat_type, facilities) VALUES ('{flatNo}','{flatType}','{facilities}')""")
                 st.write(f"New flat - {flatNo} successfully added.")
-                am.get_flatDf().clear()
+                am.get_flatDf.clear()
                 st.session_state["flatDf"], st.session_state["vacantFlatList"] = am.get_flatDf()
                 st.experimental_rerun()
 
