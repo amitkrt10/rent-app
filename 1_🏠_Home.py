@@ -49,15 +49,20 @@ if authentication_status:
         st.balloons()
 
     # Current Dues.
+    viewDue = st.sidebar.radio("Dues",[">1000","All"],horizontal=True)
+    if viewDue == ">1000":
+        d = 1000
+    else:
+        d = 0
     occupied_flats = len(currentDueDf)
-    due_flats = len(currentDueDf[currentDueDf["dues"]>0])
+    due_flats = len(currentDueDf[currentDueDf["dues"]>d])
     total_row = {"tenant_name":"Total","dues":totalCurrentDue}
     currentDueDf1 = currentDueDf.append(pd.DataFrame([total_row],index=[f"{due_flats}/{occupied_flats}"],columns=currentDueDf.columns))
     # currentDueDf.loc[len(currentDueDf.index)] = ["Total",totalCurrentDue]
     st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Current Dues = ₹ {format_number(totalCurrentDue, locale='en_IN')}</h3>", unsafe_allow_html=True)
     #Show Table
     column_headers = ['Flat','Tenant Name','Dues']
-    cellText = currentDueDf1[currentDueDf1["dues"]>0].to_records()
+    cellText = currentDueDf1[currentDueDf1["dues"]>d].to_records()
     colWidths = [1,3,2]
     scaleY = 15
     headerFontSize = 80
