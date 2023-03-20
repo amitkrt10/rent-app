@@ -126,6 +126,7 @@ if "login" in st.session_state.keys():
             tempStatementDf["bill"] = tempStatementDf['bill'].apply(lambda x: format_number(x, locale='en_IN'))
             tempStatementDf["payment"] = tempStatementDf['payment'].apply(lambda x: format_number(x, locale='en_IN'))
             tempStatementDf["dues"] = tempStatementDf['dues'].apply(lambda x: format_number(x, locale='en_IN'))
+            tempStatementDf.replace(to_replace = 0, value = '-', inplace=true)
             st.write(f'{tenantName} | {selectedFlat}')
             column_headers = ['Date','Bills','Payments','Dues']
             cellText = tempStatementDf.values
