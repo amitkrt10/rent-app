@@ -123,7 +123,7 @@ if "login" in st.session_state.keys():
             tempStatementDf = statementDf[statementDf.index==selectedFlat]
             tempStatementList = ['Total',tempStatementDf["bill"].sum(),tempStatementDf["payment"].sum(),tempStatementDf["bill"].sum()-tempStatementDf["payment"].sum()]
             tempStatementDf.loc[len(tempStatementDf.index)] = tempStatementList
-            tempStatementDf["bill"] = tempStatementDf['bill'].apply(lambda x: format_number(x, locale='en_IN') if x <> 0 else "-")
+            tempStatementDf["bill"] = tempStatementDf['bill'].apply(lambda x: format_number(x, locale='en_IN') if x !> 0 else "-")
             tempStatementDf["payment"] = tempStatementDf['payment'].apply(lambda x: format_number(x, locale='en_IN'))
             tempStatementDf["dues"] = tempStatementDf['dues'].apply(lambda x: format_number(x, locale='en_IN'))
             st.write(f'{tenantName} | {selectedFlat}')
