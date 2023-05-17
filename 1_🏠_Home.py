@@ -52,7 +52,8 @@ if authentication_status:
     occupied_flats = len(currentDueDf)
     due_flats = len(currentDueDf[currentDueDf["dues"]>0])
     total_row = {"tenant_name":"Total","dues":totalCurrentDue}
-    currentDueDf1 = currentDueDf.append(pd.DataFrame([total_row],index=[f"{due_flats}/{occupied_flats}"],columns=currentDueDf.columns))
+    # currentDueDf1 = currentDueDf.append(pd.DataFrame([total_row],index=[f"{due_flats}/{occupied_flats}"],columns=currentDueDf.columns))
+    currentDueDf1 = pd.concat([currentDueDf,pd.DataFrame([total_row],index=[f"{due_flats}/{occupied_flats}"],columns=currentDueDf.columns)])
     # currentDueDf.loc[len(currentDueDf.index)] = ["Total",totalCurrentDue]
     st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Current Dues = ₹ {format_number(totalCurrentDue, locale='en_IN')}</h3>", unsafe_allow_html=True)
     #Show Table
