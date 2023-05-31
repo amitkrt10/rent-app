@@ -30,7 +30,7 @@ def runSql(sql):
     conn.commit()
     conn.close()
 
-@st.experimental_memo
+@st.cache_data
 def get_tenantDf():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     tenantDf = pd.read_sql('''SELECT * FROM public.active_tenants ORDER BY flat_no''', con=conn)
@@ -50,7 +50,7 @@ def get_tenantDf():
     conn.close()
     return tenantDf, activeFlatList, initiaDueDict, newTenant[0]
 
-@st.experimental_memo
+@st.cache_data
 def get_exitTenantDf():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     exitTenantDf = pd.read_sql('''SELECT * FROM public.inactive_tenant order by out_date desc''', con=conn)
@@ -60,7 +60,7 @@ def get_exitTenantDf():
     conn.close()
     return exitTenantDf, exitStatementDf
 
-@st.experimental_memo
+@st.cache_data
 def get_billDf():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     billDf = pd.read_sql('''SELECT * FROM public.bills''', con=conn)
@@ -72,7 +72,7 @@ def get_billDf():
     conn.close()
     return billDf, billMonthList[0]
 
-@st.experimental_memo
+@st.cache_data
 def get_meterDf():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     sql = '''select flat_no, reading_month, readings from meter_reading
@@ -88,7 +88,7 @@ def get_meterDf():
     conn.close()
     return meterDf, readingMonthList[0]
 
-@st.experimental_memo
+@st.cache_data
 def get_paymentDf():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     paymentDf = pd.read_sql('''SELECT * FROM public.payments''', con=conn)
@@ -100,7 +100,7 @@ def get_paymentDf():
     conn.close()
     return paymentDf, paymentMonthList[0]
 
-@st.experimental_memo
+@st.cache_data
 def get_flatDf():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     flatDf = pd.read_sql('''SELECT * FROM public.flats ORDER BY flat_no''', con=conn)
@@ -114,7 +114,7 @@ def get_flatDf():
     conn.close()
     return flatDf, vacantFlatList[0]
 
-@st.experimental_memo
+@st.cache_data
 def get_collectionDf():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     sql = '''select
@@ -142,7 +142,7 @@ def get_collectionDf():
     conn.close()
     return collectionDf
 
-@st.experimental_memo
+@st.cache_data
 def get_statementDf():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     sql = '''select flat_no, t_date, bill, payment,
@@ -161,7 +161,7 @@ def get_statementDf():
     conn.close()
     return statementDf
 
-@st.experimental_memo
+@st.cache_data
 def get_currentDueDf():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     sql = '''select t.flat_no, t.tenant_name, t.previous_due+coalesce(b.total_bill,0)-coalesce(p.total_payment,0) as dues
@@ -177,7 +177,7 @@ def get_currentDueDf():
     conn.close()
     return currentDueDf, totalCurrentDue
 
-@st.experimental_memo
+@st.cache_data
 def get_exitDueDict():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cursor = conn.cursor()
@@ -201,7 +201,7 @@ def get_exitDueDict():
         exitTenantList.append([x[0].split(" | ")[0],x[0].split(" | ")[1],x[2]])
     return exitDueDict, exitDueList, exitTenantList, sum(exitDueDict.values())
 
-@st.experimental_memo
+@st.cache_data
 def get_consumption():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cursor = conn.cursor()
@@ -229,7 +229,7 @@ def get_consumption():
             consumptionDict.update({keyList[i]:valueList[i][0] - valueList[i][1]})
     return dict(sorted(consumptionDict.items(), key=lambda item: item[1]))
 
-# @st.experimental_memo
+# @st.cache_data
 # def get_loginCredential():
 #     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
 #     cursor = conn.cursor()
@@ -239,7 +239,7 @@ def get_consumption():
 #     conn.close()
 #     return credential
 
-@st.experimental_memo
+@st.cache_data
 def get_bankStatement():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     sql = '''with summary as (
@@ -273,7 +273,7 @@ def get_bankStatement():
     conn.close()
     return bankDf, int(depWit[0][0]), int(depWit[0][1]), int(rentCol[0][0]), int(elec[0][0]), int(wifi[0][0]), int(ticket[0][0]), bankAccountDf
 
-@st.experimental_memo
+@st.cache_data
 def get_tenantInfo():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cursor = conn.cursor()
@@ -285,7 +285,7 @@ def get_tenantInfo():
         tenantInfoDict[x[0]]=x[1:]
     return tenantInfoDict
 
-@st.experimental_memo
+@st.cache_data
 def get_whatsappData():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cursor = conn.cursor()
@@ -334,7 +334,7 @@ def get_diff_df():
     common = gsheetDf.merge(dbDf,on=['narration'])
     return gsheetDf[(~gsheetDf.narration.isin(common.narration))]
 
-@st.experimental_memo
+@st.cache_data
 def get_cash_data():
     GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1srCRDJ53Zf-TxQGW3jWuyG2PgM3Le46L2Jr-iCyLPWg/export?format=csv&gid=2094692059"
     s = requests.get(GOOGLE_SHEET_URL).content
