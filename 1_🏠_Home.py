@@ -39,6 +39,7 @@ if authentication_status:
         st.session_state["consumptionDict"] = am.get_consumption()
         st.session_state["flatDf"], st.session_state["vacantFlatList"] = am.get_flatDf()
         st.session_state["bankDf"], st.session_state["totalDeposite"], st.session_state["totalWithdraw"], st.session_state["rentCollection"], st.session_state["electricityExpense"], st.session_state["wifiExpense"], st.session_state["travelDeposite"], st.session_state["bankAccountDf"] = am.get_bankStatement()
+        st.session_state["bankDf_j"], st.session_state["totalDeposite_j"], st.session_state["totalWithdraw_j"], st.session_state["rentCollection_j"], st.session_state["electricityExpense_j"], st.session_state["wifiExpense_j"], st.session_state["travelDeposite_j"], st.session_state["bankAccountDf_j"] = am.get_bankStatement_j()
         st.session_state["tenantInfoDict"] = am.get_tenantInfo()
         st.session_state["whatsappData"] = am.get_whatsappData()
         st.session_state["cashCredit"],st.session_state["cashDebit"] = am.get_cash_data()
@@ -102,6 +103,8 @@ if authentication_status:
 
     if st.sidebar.button("Refresh Data",key="clearCache"):
         subDf = am.get_diff_df()
-        am.insert_values(subDf)
+        subDf_j = am.get_diff_df_j()
+        am.insert_values(subDf,"h")
+        am.insert_values(subDf_j,"j")
         st.experimental_memo.clear()
         st.experimental_rerun()

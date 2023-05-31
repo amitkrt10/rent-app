@@ -274,6 +274,40 @@ def get_bankStatement():
     return bankDf, int(depWit[0][0]), int(depWit[0][1]), int(rentCol[0][0]), int(elec[0][0]), int(wifi[0][0]), int(ticket[0][0]), bankAccountDf
 
 @st.cache_data
+def get_bankStatement_j():
+    conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
+    sql = '''with summary as (
+        select transaction_date, deposit, withdrawal, deposit - withdrawal as temp_diff, remark
+        from public.bank_statement_j
+        where account = 'PKD'
+        order by transaction_date)
+        select
+        transaction_date, deposit, withdrawal,
+        sum(temp_diff) over (order by transaction_date asc rows between unbounded preceding and current row) as balance,
+        remark
+        from summary'''
+    bankDf = pd.read_sql(sql, con=conn)
+    bankDf['deposit'] = bankDf['deposit'].apply(lambda x: format_number(int(x), locale='en_IN'))
+    bankDf['withdrawal'] = bankDf['withdrawal'].apply(lambda x: format_number(int(x), locale='en_IN'))
+    bankDf['balance'] = bankDf['balance'].apply(lambda x: format_number(int(x), locale='en_IN'))
+    cursor = conn.cursor()
+    cursor.execute("""select sum(deposit), sum(withdrawal) from public.bank_statement_j where account = 'PKD'""")
+    depWit = cursor.fetchall()
+    cursor.execute("""select sum(deposit) from public.bank_statement_j where account = 'PKD' and remark like '%Rent%'""")
+    rentCol = cursor.fetchall()
+    cursor.execute("""select sum(withdrawal) from public.bank_statement_j where account = 'PKD' and remark like '%Electricity%'""")
+    elec = cursor.fetchall()
+    cursor.execute("""select sum(withdrawal) from public.bank_statement_j where account = 'PKD' and remark like '%Wifi%'""")
+    wifi = cursor.fetchall()
+    cursor.execute("""select sum(withdrawal) from public.bank_statement_j where account = 'PKD' and remark like '%Ticket%'""")
+    ticket = cursor.fetchall()
+    cursor.execute("""select account, cast(sum(deposit)-sum(withdrawal) as int) as balance from public.bank_statement_j where account != 'Anita' group by account order by balance desc""")
+    bankAccountDf = cursor.fetchall()
+    # bankAccountDf = list(map(list, zip(*bankAccount)))
+    conn.close()
+    return bankDf, int(depWit[0][0]), int(depWit[0][1]), int(rentCol[0][0]), int(elec[0][0]), int(wifi[0][0]), int(ticket[0][0]), bankAccountDf
+
+@st.cache_data
 def get_tenantInfo():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cursor = conn.cursor()
@@ -306,12 +340,15 @@ def get_whatsappData():
     return whatsappData
 
 # Add records to database
-def insert_values(df):
+def insert_values(df,flag):
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cursor = conn.cursor()
     tuples = [tuple(x) for x in df.to_numpy()]
     cols = ','.join(list(df.columns))
-    query = "INSERT INTO %s(%s) VALUES %%s" % ('public.bank_statement', cols)
+    if flag == "j":
+        query = "INSERT INTO %s(%s) VALUES %%s" % ('public.bank_statement_j', cols)
+    else:
+        query = "INSERT INTO %s(%s) VALUES %%s" % ('public.bank_statement', cols)
     cursor = conn.cursor()
     try:
         extras.execute_values(cursor, query, tuples)
@@ -333,6 +370,17 @@ def get_diff_df():
 
     common = gsheetDf.merge(dbDf,on=['narration'])
     return gsheetDf[(~gsheetDf.narration.isin(common.narration))]
+
+def get_diff_df_j():
+    conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
+    dbDf = pd.read_sql('''SELECT * FROM public.bank_statement_j ORDER BY transaction_date''', con=conn)
+    GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1srCRDJ53Zf-TxQGW3jWuyG2PgM3Le46L2Jr-iCyLPWg/export?format=csv&gid=1959638118"
+    s = requests.get(GOOGLE_SHEET_URL).content
+    gsheetDf = pd.read_csv(io.StringIO(s.decode('utf-8')))
+
+    common = gsheetDf.merge(dbDf,on=['narration'])
+    return gsheetDf[(~gsheetDf.narration.isin(common.narration))]
+
 
 @st.cache_data
 def get_cash_data():
