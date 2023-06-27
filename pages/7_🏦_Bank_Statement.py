@@ -95,7 +95,7 @@ if "login" in st.session_state.keys():
         fig.update_layout(width=370, height=(100+((15+2)*30)), margin=dict(l=0, r=0, t=50, b=0))
         st.write(fig)
 
-        csv = bankDf.to_csv(index=False).encode('utf-8')
+        csv = bankDf_j.to_csv(index=False).encode('utf-8')
         fileName = "jana_bank_statement.csv"
         st.download_button("Download Statement", csv, fileName, "text/csv", key="download_j")
 
