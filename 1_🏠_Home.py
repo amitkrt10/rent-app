@@ -2,6 +2,7 @@ import streamlit as st
 import adminModules as am
 import appPlots as ap
 import pandas as pd
+from PIL import Image
 import streamlit_authenticator as stauth
 from babel.numbers import format_number
 import warnings
@@ -15,7 +16,7 @@ st.set_page_config(
     initial_sidebar_state='collapsed'
 )
 
-st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: oblique;'>KARTIKEY BHAWAN</h1>", unsafe_allow_html=True)
+# st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: oblique;'>KARTIKEY BHAWAN</h1>", unsafe_allow_html=True)
 
 hashed_passwords = stauth.Hasher([st.secrets["LPASSWORD"]]).generate()
 credentials = {"usernames":{st.secrets["USERNAME"]:{"name":st.secrets["NAME"],"password":hashed_passwords[0]}}}
@@ -56,6 +57,7 @@ if authentication_status:
     # currentDueDf1 = currentDueDf.append(pd.DataFrame([total_row],index=[f"{due_flats}/{occupied_flats}"],columns=currentDueDf.columns))
     currentDueDf1 = pd.concat([currentDueDf,pd.DataFrame([total_row],index=[f"{due_flats}/{occupied_flats}"],columns=currentDueDf.columns)])
     # currentDueDf.loc[len(currentDueDf.index)] = ["Total",totalCurrentDue]
+    st.image("logo.png",use_column_width=True)
     st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Current Dues = ₹ {format_number(totalCurrentDue, locale='en_IN')}</h3>", unsafe_allow_html=True)
     #Show Table
     column_headers = ['Flat','Tenant Name','Dues']
