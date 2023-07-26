@@ -46,7 +46,7 @@ if authentication_status:
         collectionDf = st.session_state["collectionDf"]
         currentDueDf, totalCurrentDue = st.session_state["currentDueDf"], st.session_state["totalCurrentDue"]
         exitDueList, exitDueTotal = st.session_state["exitDueList"], st.session_state["exitDueTotal"]
-        bankAccountDf = st.session_state["bankAccountDf"]
+        # bankAccountDf = st.session_state["bankAccountDf"]
         st.balloons()
 
     # Current Dues.
