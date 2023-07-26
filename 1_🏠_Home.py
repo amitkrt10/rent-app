@@ -80,15 +80,16 @@ if authentication_status:
     ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
 
     #Exit Dues
-    st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Exit Tenants Dues = ₹ {format_number(exitDueTotal, locale='en_IN')}</h3>", unsafe_allow_html=True)
-    column_headers = ['Flat','Tenant Name','Dues']
-    cellText = exitDueList+ [['Total',"",exitDueTotal]]
-    colWidths = [1,3,2]
-    scaleY = 15
-    headerFontSize = 80
-    cellFontSize = 70
-    alignList = ['center','left','right']
-    ap.plot_table_with_total(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+    st.expander(f"Ex Tenant Dues"):
+        st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Exit Tenants Dues = ₹ {format_number(exitDueTotal, locale='en_IN')}</h3>", unsafe_allow_html=True)
+        column_headers = ['Flat','Tenant Name','Dues']
+        cellText = exitDueList+ [['Total',"",exitDueTotal]]
+        colWidths = [1,3,2]
+        scaleY = 15
+        headerFontSize = 80
+        cellFontSize = 70
+        alignList = ['center','left','right']
+        ap.plot_table_with_total(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
 
     #Bank Account Breakups
     # st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Cash in Bank</h3>", unsafe_allow_html=True)
