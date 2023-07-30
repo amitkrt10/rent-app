@@ -82,7 +82,7 @@ if "login" in st.session_state.keys():
     with st.expander("Exit Tenants Statement"):
         sortedExitTenants = list(exitDueDict.keys())
         sortedExitTenants.sort()
-        selectFlatTenant = st.selectbox("Select Flat No.",sortedExitTenants+["Select"],index=len(exitDueDict.keys())-1,key="viewexitStatement")
+        selectFlatTenant = st.selectbox("Select Flat No.",sortedExitTenants+["Select"],index=len(exitDueDict.keys()),key="viewexitStatement")
         if selectFlatTenant == "Select":
             st.write("Select a flat!")
         else:
