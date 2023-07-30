@@ -21,8 +21,8 @@ def make_clickable(url):
     text = url[-10:]
     return f'<a target="_blank" href="{url}">{text}</a>'
 
-st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: oblique;'>KARTIKEY BHAWAN</h1>", unsafe_allow_html=True)
-
+# st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: oblique;'>KARTIKEY BHAWAN</h1>", unsafe_allow_html=True)
+st.image("logo.png",use_column_width=True)
 credentialDict = tm.get_loginCredential()
 
 authenticator = stauth.Authenticate(credentialDict,"tenant_signature_name","tenant_cookie_key",365,"amitkrt10@gmail.com")
@@ -98,7 +98,7 @@ if authentication_status:
     alignList = ['left','right']
     ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
 
-    pd.set_option('display.max_colwidth', -1)
+    # pd.set_option('display.max_colwidth', -1)
     col1, col2 = st.columns(2)
 
     #Service Providers
@@ -112,8 +112,8 @@ if authentication_status:
     col1.info("Please inform the owner before making any changes or repair to the property")
 
     col2.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Owner Details</h3>", unsafe_allow_html=True)
-    data = {'Name':['RN Thakur','Amit','Santosh'],
-            'Number':[7005143261,8918104083,9036023003]}
+    data = {'Name':['Amit','Santosh','RN Thakur'],
+            'Number':[8918104083,9036023003,7005143261]}
     df1 = pd.DataFrame(data, index=[1,2,3])
     df1['Phone'] = add_stream_url(df1['Number'])
     df1['Phone'] = df1['Phone'].apply(make_clickable)
