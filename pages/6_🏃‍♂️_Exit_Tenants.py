@@ -51,7 +51,9 @@ if "login" in st.session_state.keys():
 
     #View Final Exit Bills
     with st.expander("View Final Exit Bills"):
-        selectFlatTenant = st.selectbox("Select Flat No.",exitDueDict.keys(),key="viewexitbill")
+        sortedExitTenants = list(exitDueDict.keys())
+        sortedExitTenants.sort()
+        selectFlatTenant = st.selectbox("Select Flat No.",sortedExitTenants,key="viewexitbill")
         tempExitViewList = list(exitTenantDf[exitTenantDf.index==selectFlatTenant].values[0])
 
         cellText = []
@@ -78,9 +80,9 @@ if "login" in st.session_state.keys():
 
     # Exit Tenants Statement
     with st.expander("Exit Tenants Statement"):
-        sortedExitTenants = list(exitDueDict.keys())+["Select"]
+        sortedExitTenants = list(exitDueDict.keys())
         sortedExitTenants.sort()
-        selectFlatTenant = st.selectbox("Select Flat No.",sortedExitTenants,index=len(exitDueDict.keys())-1,key="viewexitStatement")
+        selectFlatTenant = st.selectbox("Select Flat No.",sortedExitTenants+["Select"],index=len(exitDueDict.keys())-1,key="viewexitStatement")
         if selectFlatTenant == "Select":
             st.write("Select a flat!")
         else:
