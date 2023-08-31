@@ -189,11 +189,12 @@ def get_currentDueDf():
 def get_exitDueDict():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cursor = conn.cursor()
-    sql = '''select es.flat_tenant, es.due as mtd, it.mobile from public.exit_statement es
+    sql = '''select flat_tenant, min(mtd) as mtd, mobile from (
+        select es.flat_tenant, es.due as mtd, it.mobile from public.exit_statement es
         left join public.inactive_tenant it on es.flat_tenant = it.flat_tenant
         where concat(es.flat_tenant,es.transaction_date) in 
         (select concat(flat_tenant,mtd) from (select flat_tenant, max(transaction_date) as mtd from public.exit_statement group by 1)mxd)
-        order by 1'''
+        order by 1) a group by 1,3 order by 1;'''
     cursor.execute(sql)
     result = cursor.fetchall()
     conn.close()
