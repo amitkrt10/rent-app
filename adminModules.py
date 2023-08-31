@@ -4,6 +4,7 @@ import requests
 import pandas as pd
 import psycopg2
 import psycopg2.extras as extras
+from collections import OrderedDict
 import streamlit as st
 from babel.numbers import format_number
 import warnings
@@ -55,7 +56,14 @@ def get_exitTenantDf():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     exitTenantDf = pd.read_sql('''SELECT * FROM public.inactive_tenant order by out_date desc''', con=conn)
     exitTenantDf.set_index('flat_tenant',inplace=True)
-    exitStatementDf = pd.read_sql('''select * from public.exit_statement order by flat_tenant, transaction_date''', con=conn)
+    exitStatementDf = pd.read_sql('''SELECT flat_tenant, transaction_date, bill, payment,
+                                        sum(bill_pay) over (partition by flat_tenant order by transaction_date asc rows between unbounded preceding and current row) as due
+                                        FROM
+                                            (select flat_tenant, transaction_date, sum(bill) as bill, sum(payment) as payment,
+                                            sum(bill)-sum(payment) as bill_pay
+                                            from public.exit_statement 
+                                            group by 1,2
+                                            order by 1,2) a;''', con=conn)
     exitStatementDf.set_index('flat_tenant',inplace=True)
     conn.close()
     return exitTenantDf, exitStatementDf
@@ -185,7 +193,7 @@ def get_exitDueDict():
         left join public.inactive_tenant it on es.flat_tenant = it.flat_tenant
         where concat(es.flat_tenant,es.transaction_date) in 
         (select concat(flat_tenant,mtd) from (select flat_tenant, max(transaction_date) as mtd from public.exit_statement group by 1)mxd)
-        order by 2 desc'''
+        order by 1'''
     cursor.execute(sql)
     result = cursor.fetchall()
     conn.close()
@@ -199,6 +207,7 @@ def get_exitDueDict():
     exitTenantList = []
     for x in result:
         exitTenantList.append([x[0].split(" | ")[0],x[0].split(" | ")[1],x[2]])
+    # exitDueDict = OrderedDict(sorted(exitDueDict.items()))
     return exitDueDict, exitDueList, exitTenantList, sum(exitDueDict.values())
 
 @st.cache_data
