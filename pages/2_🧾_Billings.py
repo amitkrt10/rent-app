@@ -95,7 +95,8 @@ if "login" in st.session_state.keys():
                 cellText.append(["Electricity",viewList[5]])
                 if viewList[3] != 0:
                     cellText.append(["Water",viewList[3]])
-                cellText.append(["Garbage",viewList[4]])
+                if viewList[4] != 0:
+                    cellText.append(["Garbage",viewList[4]])
                 if viewList[6] != 0:
                     cellText.append(["Previous Due",viewList[6]])
                 cellText.append(["Total",viewList[8]])
