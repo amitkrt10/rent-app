@@ -152,6 +152,21 @@ if "login" in st.session_state.keys():
                 # messages = f"REMINDER!!!\n\nHi, {detailList[0]}\nYour Current Rent Due = ₹ {detailList[2]}\nPlease pay at the earliest\n\nThanks\nKartikey Bhawan"
                 # st.write(f"Reminder sent to {selectedFlatWa}")
 
+    with st.expander("Other Chages"):
+        selectedFlatOC = st.selectbox("Select Flat No.",activeFlatList+["Select"],index=len(activeFlatList+["Select"])-1,key="OtherChages")
+        if selectedFlatOC == "Select":
+            st.write("Select a flat!")
+        else:
+            with st.form("Other Chages",clear_on_submit=True):
+                chargeDate = st.date_input("Charge Date")
+                amount = st.text_input("Amount")
+                remark = st.text_input("Remark")
+                submitted = st.form_submit_button("Submit")
+                if submitted:
+                    chargeMonth = (chargeDate.strftime("%Y/%m"))
+                    am.runSql(f"""INSERT INTO public.other_charges(flat_no,charge_date,charge_month,amount,remark) VALUES ('{selectedFlatOC}','{chargeDate}','{chargeMonth}','{amount}','{remark}')""")
+                    st.write(f'₹ {amount} added to {selectedFlatOC} for {remark}')
+                    time.sleep(3)
 
 else:
     st.error("Please Login First...!")
