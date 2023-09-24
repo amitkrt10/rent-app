@@ -40,11 +40,13 @@ if "login" in st.session_state.keys():
                 am.get_statementDf.clear()
                 am.get_currentDueDf.clear()
                 am.get_whatsappData.clear()
+                am.get_otherCharges.clear()
                 st.session_state["paymentDf"], st.session_state["paymentMonthList"] = am.get_paymentDf()
                 st.session_state["collectionDf"] = am.get_collectionDf()
                 st.session_state["statementDf"] = am.get_statementDf()
                 st.session_state["currentDueDf"], st.session_state["totalCurrentDue"] = am.get_currentDueDf()
                 st.session_state["whatsappData"] = am.get_whatsappData()
+                st.session_state["otherChargesDf"] = am.get_otherCharges()
                 st.experimental_rerun()
 
 else:
