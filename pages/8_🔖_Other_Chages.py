@@ -44,3 +44,5 @@ if "login" in st.session_state.keys():
                     am.get_otherCharges.clear()
                     st.session_state["otherChargesDf"] = am.get_otherCharges()
                     st.experimental_rerun()
+
+        

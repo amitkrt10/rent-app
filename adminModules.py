@@ -403,8 +403,9 @@ def get_cash_data():
     return cashCredit, cashDebit
 
 @st.cache_data
-def get_otherCharges():
+def get_statementDf():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
-    sql = """select * from public.other_charges"""
+    sql = '''select * from public.other_charges order by charge_date'''
     otherChargesDf = pd.read_sql(sql, con=conn)
+    conn.close()
     return otherChargesDf
