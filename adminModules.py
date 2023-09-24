@@ -401,3 +401,15 @@ def get_cash_data():
     s = requests.get(GOOGLE_SHEET_URL).content
     cashDebit = pd.read_csv(io.StringIO(s.decode('utf-8')))
     return cashCredit, cashDebit
+
+@st.cache_data
+def get_otherCharges():
+    conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
+    sql = '''SELECT * FROM
+            (SELECT flat_no, charge_date, amount, remark FROM public.other_charges
+            union all
+            SELECT flat_no, payment_date as charge_date, amount, 'Payment' as remark  FROM public.payments where amount < 0) a
+            order by charge_date'''
+    otherChargesDf = pd.read_sql(sql, con=conn)
+    conn.close()
+    return otherChargesDf

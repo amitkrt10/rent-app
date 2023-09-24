@@ -44,6 +44,7 @@ if authentication_status:
         st.session_state["tenantInfoDict"] = am.get_tenantInfo()
         st.session_state["whatsappData"] = am.get_whatsappData()
         st.session_state["cashCredit"],st.session_state["cashDebit"] = am.get_cash_data()
+        st.session_state["otherChargesDf"] = am.get_otherCharges()
         collectionDf = st.session_state["collectionDf"]
         currentDueDf, totalCurrentDue = st.session_state["currentDueDf"], st.session_state["totalCurrentDue"]
         exitDueList, exitDueTotal = st.session_state["exitDueList"], st.session_state["exitDueTotal"]
