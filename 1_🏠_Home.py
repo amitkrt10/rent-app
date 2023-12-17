@@ -62,7 +62,10 @@ if authentication_status:
     st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Current Dues = ₹ {format_number(totalCurrentDue, locale='en_IN')}</h3>", unsafe_allow_html=True)
     #Show Table
     column_headers = ['Flat','Tenant Name','Dues']
-    cellText = currentDueDf1[currentDueDf1["dues"]>0].to_records()
+    if totalCurrentDue == 0:
+        cellText = currentDueDf1.tail(1).to_records()
+    else:
+       cellText = currentDueDf1[currentDueDf1["dues"]>0].to_records()
     colWidths = [1,3,2]
     scaleY = 15
     headerFontSize = 80
