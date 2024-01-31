@@ -1,6 +1,7 @@
 import streamlit as st
 import adminModules as am
 import appPlots as ap
+import backupModule as bm
 import pandas as pd
 from PIL import Image
 import streamlit_authenticator as stauth
@@ -115,3 +116,7 @@ if authentication_status:
         am.insert_values(subDf_j,"j")
         st.experimental_memo.clear()
         st.experimental_rerun()
+
+    if st.sidebar.button("Backup Data",key="clearCache"):
+        bm.backup_tables()
+        st.write("Backup Comopleted!")
