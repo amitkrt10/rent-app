@@ -29,6 +29,13 @@ if "login" in st.session_state.keys():
 
     st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Backup Data</h2>", unsafe_allow_html=True)
 
+    # Read txt
+    f = open("temp.txt", "r")
+    txt = f.read()
+    st.write(txt.rsplit(' ', 1)[0])
+    st.markdown(f"[View Backup Files](https://drive.google.com/drive/folders/{txt.rsplit(' ', 1)[1]})")
+    f.close()
+
     HOST= st.secrets["HOST"]
     DATABASE= st.secrets["DATABASE"]
     USER= st.secrets["USER"]
@@ -111,6 +118,7 @@ if "login" in st.session_state.keys():
         with open('credentials.json', 'w') as fp:
             json.dump(BACKUP_CRED, fp)
         curr_time = time.strftime("%Y_%m_%d_%H_%M", time.localtime())
+        print_time = time.strftime("%Y-%m-%d %H:%M", time.localtime())
         folder_id = createFolder(f"{curr_time}_Backup")
         conn = db_connection()
         cursor = conn.cursor()
@@ -128,3 +136,7 @@ if "login" in st.session_state.keys():
             os.remove("credentials.json")
 
         st.write("Backup Completed!")
+
+        txtFile = open("temp.txt", "w")
+        txtFile.write(f"Last backup done at {print_time} {folder_id}")
+        txtFile.close()
