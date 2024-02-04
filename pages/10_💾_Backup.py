@@ -30,7 +30,7 @@ if "login" in st.session_state.keys():
     st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Backup Data</h2>", unsafe_allow_html=True)
 
     # Read txt
-    f = open("temp.txt", "r")
+    f = open("backup_files/temp.txt", "r")
     txt = f.read()
     st.write(txt.rsplit(' ', 1)[0])
     st.markdown(f"[View Backup Files](https://drive.google.com/drive/folders/{txt.rsplit(' ', 1)[1]})")
@@ -137,6 +137,6 @@ if "login" in st.session_state.keys():
 
         st.write("Backup Completed!")
 
-        txtFile = open("temp.txt", "w")
+        txtFile = open("backup_files/temp.txt", "w")
         txtFile.write(f"Last backup done at {print_time} {folder_id}")
         txtFile.close()
