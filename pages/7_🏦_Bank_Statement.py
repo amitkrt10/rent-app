@@ -10,14 +10,14 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state='collapsed'
 )
-st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: oblique;'>KARTIKEY BHAWAN</h1>", unsafe_allow_html=True)
+am.get_header1()
 
 if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):
         # bankDf, totalDeposite, totalWithdraw, rentCollection, electricityExpense, wifiExpense, travelDeposite = st.session_state["bankDf"], st.session_state["totalDeposite"], st.session_state["totalWithdraw"], st.session_state["rentCollection"], st.session_state["electricityExpense"], st.session_state["wifiExpense"], st.session_state["travelDeposite"]
         bankDf_j, totalDeposite_j, totalWithdraw_j, rentCollection_j, electricityExpense_j, wifiExpense_j, travelDeposite_j = st.session_state["bankDf_j"], st.session_state["totalDeposite_j"], st.session_state["totalWithdraw_j"], st.session_state["rentCollection_j"], st.session_state["electricityExpense_j"], st.session_state["wifiExpense_j"], st.session_state["travelDeposite_j"]
 
-    st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px red;font-style: oblique;color:yellow;'>Bank Balance = ₹ {format_number((totalDeposite_j - totalWithdraw_j), locale="en_IN")}</h3>", unsafe_allow_html=True)
+    # st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px red;font-style: oblique;color:yellow;'>Bank Balance = ₹ {format_number((totalDeposite_j - totalWithdraw_j), locale="en_IN")}</h3>", unsafe_allow_html=True)
     am.get_header(f'Bank Balance = ₹ {format_number((totalDeposite_j - totalWithdraw_j), locale="en_IN")}')
     # with st.expander("View Break-Ups"):
     #     st.metric("Deposits",f"₹ {format_number((totalDeposite+totalDeposite_j), locale="en_IN")}")

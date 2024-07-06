@@ -414,6 +414,8 @@ def get_otherCharges():
     conn.close()
     return otherChargesDf
 
+def get_header1():
+    st.markdown("<h1 style='text-align: center;text-shadow: 2px 1px grey;font-style: oblique;color:black;'>KARTIKEY BHAWAN</h1>", unsafe_allow_html=True)
 
 def get_header(title):
     st.markdown(f"<h3 style='text-align: center;text-shadow: 1px 1px gray;font-style: oblique;'>{title}</h3>", unsafe_allow_html=True)

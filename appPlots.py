@@ -174,11 +174,11 @@ def plot_table_with_title_total(title_text,subtitle_text,column_headers,cellText
     st.pyplot(fig)
 
 @st.cache_resource
-def plot_bar(title,x_data,y_data,bar_width,x_rotate,fontsize):
+def plot_bar(title,_x_data,_y_data,bar_width,x_rotate,fontsize):
     # colour = [ "red", "blue", "green", "yellow", "purple", "orange", "royalblue", "#AD688E", "#CCD9C7", "#96ABA0" ]
     # rand_colours = [random.choice(colour) for i in range(len(y_data))]
     fig, ax = plt.subplots()
-    ax.bar(x_data,y_data,bar_width)
+    ax.bar(_x_data,_y_data,bar_width)
     ax.set_title(f'{title}\n')
     for rect in ax.patches:
         y_value = rect.get_height()

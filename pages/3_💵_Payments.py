@@ -11,7 +11,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state='collapsed'
 )
-st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: oblique;'>KARTIKEY BHAWAN</h1>", unsafe_allow_html=True)
+am.get_header1()
 
 if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):

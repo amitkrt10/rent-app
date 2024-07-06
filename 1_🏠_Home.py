@@ -16,17 +16,19 @@ st.set_page_config(
     initial_sidebar_state='collapsed'
 )
 
-# st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: oblique;'>KARTIKEY BHAWAN</h1>", unsafe_allow_html=True)
+# am.get_header1()
 
-hashed_passwords = stauth.Hasher([st.secrets["LPASSWORD"]]).generate()
-credentials = {"usernames":{st.secrets["USERNAME"]:{"name":st.secrets["NAME"],"password":hashed_passwords[0]}}}
-authenticator = stauth.Authenticate(credentials,"admin_signature_name","admin_cookie_key",365,"amitkrt10@gmail.com")
-name, authentication_status, username = authenticator.login('Login', 'main')
+# hashed_passwords = stauth.Hasher([st.secrets["LPASSWORD"]]).generate()
+# credentials = {"usernames":{st.secrets["USERNAME"]:{"name":st.secrets["NAME"],"password":hashed_passwords[0]}}}
+# authenticator = stauth.Authenticate(credentials,"admin_signature_name","admin_cookie_key",365,"amitkrt10@gmail.com")
+# name, authentication_status, username = authenticator.login('Login', 'main')
 
-if authentication_status:
-    authenticator.logout('Logout', 'sidebar')
-    if "login" not in st.session_state:
-        st.session_state["login"] = True
+if 1==1:
+    st.session_state["login"] = True
+# if authentication_status:
+    # authenticator.logout('Logout', 'sidebar')
+    # if "login" not in st.session_state:
+    #     st.session_state["login"] = True
     with st.spinner(text='Reading Data... Please Wait...!'):
         st.session_state["tenantDf"], st.session_state["activeFlatList"], st.session_state["initiaDueDict"], st.session_state["newTenantFlats"] = am.get_tenantDf()
         st.session_state["billDf"], st.session_state["billMonthList"] = am.get_billDf()
@@ -56,8 +58,10 @@ if authentication_status:
     total_row = {"tenant_name":"Total","dues":totalCurrentDue}
     # currentDueDf1 = currentDueDf.append(pd.DataFrame([total_row],index=[f"{due_flats}/{occupied_flats}"],columns=currentDueDf.columns))
     currentDueDf1 = pd.concat([currentDueDf,pd.DataFrame([total_row],index=[f"{due_flats}/{occupied_flats}"],columns=currentDueDf.columns)])
+    currentDueDf1['dues'] = currentDueDf1['dues'].apply(lambda x: format_number(x, locale="en_IN"))
     # currentDueDf.loc[len(currentDueDf.index)] = ["Total",totalCurrentDue]
-    st.markdown("<h1 style='text-align: center;text-shadow: 2px 1px grey;font-style: oblique;color:black;'>KARTIKEY BHAWAN</h1>", unsafe_allow_html=True)
+    # st.markdown("<h1 style='text-align: center;text-shadow: 2px 1px grey;font-style: oblique;color:black;'>KARTIKEY BHAWAN</h1>", unsafe_allow_html=True)
+    am.get_header1()
     # st.image("logo.png",use_column_width=True)
     #st.markdown(f"<h3 style='text-align: center;text-shadow: 1px 1px gray;font-style: oblique;'>Current Dues = ₹ {format_number(totalCurrentDue, locale="en_IN")}</h3>", unsafe_allow_html=True)
     am.get_header(f'Current Dues = ₹ {format_number(totalCurrentDue, locale="en_IN")}')
@@ -66,7 +70,7 @@ if authentication_status:
     if totalCurrentDue == 0:
         cellText = currentDueDf1.tail(1).to_records()
     else:
-       cellText = currentDueDf1[currentDueDf1["dues"]>0].to_records()
+       cellText = currentDueDf1[(currentDueDf1["dues"]!='0') & (currentDueDf1["dues"].str[:1]!='-')].to_records()
     colWidths = [1,3,2]
     scaleY = 15
     headerFontSize = 80

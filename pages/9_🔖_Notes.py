@@ -15,7 +15,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state='collapsed'
 )
-st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: oblique;'>KARTIKEY BHAWAN</h1>", unsafe_allow_html=True)
+am.get_header1()
 
 if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):
@@ -23,7 +23,7 @@ if "login" in st.session_state.keys():
         otherChargesDf = st.session_state["otherChargesDf"]
 
     # st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Notes</h2>", unsafe_allow_html=True)
-    am.get_header(Notes)
+    am.get_header('Notes')
 
     st.markdown("_<h4> Flat No: 003 AIHM </h4>_", unsafe_allow_html=True)
     columns_003 = ['From', 'To', 'Rent Amount']
