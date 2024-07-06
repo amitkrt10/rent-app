@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
 
+@st.cache_resource
 def plot_table_with_total(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList):
     fig, ax = plt.subplots()
     fig.patch.set_visible(False)
@@ -56,6 +57,7 @@ def plot_table_with_total(column_headers,cellText,colWidths,scaleY,headerFontSiz
             cell.get_text().set_fontstyle('italic')
     st.pyplot(fig)
 
+@st.cache_resource
 def plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList):
     fig, ax = plt.subplots()
     fig.patch.set_visible(False)
@@ -102,6 +104,7 @@ def plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontS
             cell.get_text().set_fontstyle('italic')
     st.pyplot(fig)
 
+@st.cache_resource
 def plot_table_with_title_total(title_text,subtitle_text,column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList):
     fig, ax = plt.subplots()
     fig.patch.set_visible(False)
@@ -170,17 +173,18 @@ def plot_table_with_title_total(title_text,subtitle_text,column_headers,cellText
     plt.draw()
     st.pyplot(fig)
 
+@st.cache_resource
 def plot_bar(title,x_data,y_data,bar_width,x_rotate,fontsize):
     # colour = [ "red", "blue", "green", "yellow", "purple", "orange", "royalblue", "#AD688E", "#CCD9C7", "#96ABA0" ]
     # rand_colours = [random.choice(colour) for i in range(len(y_data))]
     fig, ax = plt.subplots()
     ax.bar(x_data,y_data,bar_width)
-    ax.set_title(title)
+    ax.set_title(f'{title}\n')
     for rect in ax.patches:
         y_value = rect.get_height()
         x_value = rect.get_x() + rect.get_width() / 2
         space = 5
-        label = "{:.1f}".format(y_value)
+        label = "{:.0f}".format(y_value)
         ax.annotate(
             label,
             (x_value, y_value),
@@ -193,9 +197,11 @@ def plot_bar(title,x_data,y_data,bar_width,x_rotate,fontsize):
     plt.xticks(rotation = x_rotate)
     st.pyplot(fig)
 
+@st.cache_resource
 def add_stream_url(phone_num):
     return [f'tel:+91{n}' for n in phone_num]
 
+@st.cache_resource
 def make_clickable(url):
     text = url[-10:]
     return f'<a target="_blank" href="{url}">{text}</a>'

@@ -49,7 +49,6 @@ if authentication_status:
         currentDueDf, totalCurrentDue = st.session_state["currentDueDf"], st.session_state["totalCurrentDue"]
         exitDueList, exitDueTotal = st.session_state["exitDueList"], st.session_state["exitDueTotal"]
         # bankAccountDf = st.session_state["bankAccountDf"]
-        st.balloons()
 
     # Current Dues.
     occupied_flats = len(currentDueDf)
@@ -113,5 +112,5 @@ if authentication_status:
         subDf_j = am.get_diff_df_j()
         am.insert_values(subDf,"h")
         am.insert_values(subDf_j,"j")
-        st.experimental_memo.clear()
+        st.cache_data.clear()
         st.experimental_rerun()
