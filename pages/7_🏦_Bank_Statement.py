@@ -1,6 +1,7 @@
 import streamlit as st
 from babel.numbers import format_number
 import plotly.graph_objects as go
+import adminModules as am
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -15,19 +16,20 @@ if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):
         # bankDf, totalDeposite, totalWithdraw, rentCollection, electricityExpense, wifiExpense, travelDeposite = st.session_state["bankDf"], st.session_state["totalDeposite"], st.session_state["totalWithdraw"], st.session_state["rentCollection"], st.session_state["electricityExpense"], st.session_state["wifiExpense"], st.session_state["travelDeposite"]
         bankDf_j, totalDeposite_j, totalWithdraw_j, rentCollection_j, electricityExpense_j, wifiExpense_j, travelDeposite_j = st.session_state["bankDf_j"], st.session_state["totalDeposite_j"], st.session_state["totalWithdraw_j"], st.session_state["rentCollection_j"], st.session_state["electricityExpense_j"], st.session_state["wifiExpense_j"], st.session_state["travelDeposite_j"]
-        st.balloons()
 
-    st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px red;font-style: oblique;color:yellow;'>Bank Balance = ₹ {format_number((totalDeposite_j - totalWithdraw_j), locale='en_IN')}</h3>", unsafe_allow_html=True)
+    st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px red;font-style: oblique;color:yellow;'>Bank Balance = ₹ {format_number((totalDeposite_j - totalWithdraw_j), locale="en_IN")}</h3>", unsafe_allow_html=True)
+    am.get_header(f'Bank Balance = ₹ {format_number((totalDeposite_j - totalWithdraw_j), locale="en_IN")}')
     # with st.expander("View Break-Ups"):
-    #     st.metric("Deposits",f"₹ {format_number((totalDeposite+totalDeposite_j), locale='en_IN')}")
-    #     st.metric("Withdrawals",f"₹ {format_number((totalWithdraw+totalWithdraw_j), locale='en_IN')}")
-    #     st.metric("Rent Collection",f"₹ {format_number((rentCollection+rentCollection_j), locale='en_IN')}")
-    #     st.metric("Electricity Expense",f"₹ {format_number((electricityExpense+electricityExpense_j), locale='en_IN')}")
-    #     st.metric("Wifi Expense",f"₹ {format_number((wifiExpense+electricityExpense_j), locale='en_IN')}")
-    #     st.metric("Travel Expense",f"₹ {format_number((travelDeposite+travelDeposite_j), locale='en_IN')}")
+    #     st.metric("Deposits",f"₹ {format_number((totalDeposite+totalDeposite_j), locale="en_IN")}")
+    #     st.metric("Withdrawals",f"₹ {format_number((totalWithdraw+totalWithdraw_j), locale="en_IN")}")
+    #     st.metric("Rent Collection",f"₹ {format_number((rentCollection+rentCollection_j), locale="en_IN")}")
+    #     st.metric("Electricity Expense",f"₹ {format_number((electricityExpense+electricityExpense_j), locale="en_IN")}")
+    #     st.metric("Wifi Expense",f"₹ {format_number((wifiExpense+electricityExpense_j), locale="en_IN")}")
+    #     st.metric("Travel Expense",f"₹ {format_number((travelDeposite+travelDeposite_j), locale="en_IN")}")
 
-    st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Bank Statement</h3>", unsafe_allow_html=True)
-    # with st.expander(f"HDFC Bank Statement : {format_number((totalDeposite - totalWithdraw), locale='en_IN')}"):
+    # st.markdown("<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Bank Statement</h3>", unsafe_allow_html=True)
+    am.get_header('Bank Statement')
+    # with st.expander(f"HDFC Bank Statement : {format_number((totalDeposite - totalWithdraw), locale="en_IN")}"):
     #     #Show Table
     #     lendf = len(bankDf)
     #     fig = go.Figure(data=[go.Table(
@@ -63,7 +65,7 @@ if "login" in st.session_state.keys():
     #     fileName = "hdfc_bank_statement.csv"
     #     st.download_button("Download Statement", csv, fileName, "text/csv", key="download")
 
-    # st.expander(f"JANA Bank Statement : {format_number((totalDeposite_j - totalWithdraw_j), locale='en_IN')}"):
+    # st.expander(f"JANA Bank Statement : {format_number((totalDeposite_j - totalWithdraw_j), locale="en_IN")}"):
     #Show Table
     lendf = len(bankDf_j)
     fig = go.Figure(data=[go.Table(

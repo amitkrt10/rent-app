@@ -21,9 +21,9 @@ if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):
         tenantDf, activeFlatList = st.session_state["tenantDf"], st.session_state["activeFlatList"]
         otherChargesDf = st.session_state["otherChargesDf"]
-        st.balloons()
 
-    st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Notes</h2>", unsafe_allow_html=True)
+    # st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Notes</h2>", unsafe_allow_html=True)
+    am.get_header(Notes)
 
     st.markdown("_<h4> Flat No: 003 AIHM </h4>_", unsafe_allow_html=True)
     columns_003 = ['From', 'To', 'Rent Amount']

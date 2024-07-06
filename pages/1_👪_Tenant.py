@@ -19,9 +19,9 @@ if "login" in st.session_state.keys():
         vacantFlatList = st.session_state["vacantFlatList"]
         currentDueDf = st.session_state["currentDueDf"]
         tenantInfoDict = st.session_state["tenantInfoDict"]
-        st.balloons()
 
-    st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Tenants</h2>", unsafe_allow_html=True)
+    # st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Tenants</h2>", unsafe_allow_html=True)
+    am.get_header('Tenants')
 
     #Active Tenants
     with st.expander("Active Tenants"):

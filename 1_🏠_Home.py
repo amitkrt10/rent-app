@@ -59,7 +59,8 @@ if authentication_status:
     # currentDueDf.loc[len(currentDueDf.index)] = ["Total",totalCurrentDue]
     st.markdown("<h1 style='text-align: center;text-shadow: 2px 1px grey;font-style: oblique;color:black;'>KARTIKEY BHAWAN</h1>", unsafe_allow_html=True)
     # st.image("logo.png",use_column_width=True)
-    st.markdown(f"<h3 style='text-align: center;text-shadow: 1px 1px gray;font-style: oblique;'>Current Dues = ₹ {format_number(totalCurrentDue, locale='en_IN')}</h3>", unsafe_allow_html=True)
+    #st.markdown(f"<h3 style='text-align: center;text-shadow: 1px 1px gray;font-style: oblique;'>Current Dues = ₹ {format_number(totalCurrentDue, locale="en_IN")}</h3>", unsafe_allow_html=True)
+    am.get_header(f'Current Dues = ₹ {format_number(totalCurrentDue, locale="en_IN")}')
     #Show Table
     column_headers = ['Flat','Tenant Name','Dues']
     if totalCurrentDue == 0:
@@ -73,8 +74,9 @@ if authentication_status:
     alignList = ['center','left','right']
     ap.plot_table_with_total(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
 
-    #Monthly Collection
-    st.markdown("<h3 style='text-align: center;text-shadow: 1px 1px gray;font-style: oblique;'>Monthly Collection</h3>", unsafe_allow_html=True)
+    # Monthly Collection
+    # st.markdown("<h3 style='text-align: center;text-shadow: 1px 1px gray;font-style: oblique;'>Monthly Collection</h3>", unsafe_allow_html=True)
+    am.get_header('Monthly Collection')
     #show Table
     column_headers = ['Month','Cash','Online','Adjust','Payment','Billed','Collection']
     cellText = collectionDf.values
@@ -87,7 +89,8 @@ if authentication_status:
 
     #Exit Dues
     with st.expander("Ex Tenant Dues"):
-        st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Exit Tenants Dues = ₹ {format_number(exitDueTotal, locale='en_IN')}</h3>", unsafe_allow_html=True)
+        # st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Exit Tenants Dues = ₹ {format_number(exitDueTotal, locale="en_IN")}</h3>", unsafe_allow_html=True)
+        am.get_header(f'Exit Tenants Dues = ₹ {format_number(exitDueTotal, locale="en_IN")}')
         column_headers = ['Flat','Tenant Name','Dues']
         cellText = exitDueList+ [['Total',"",exitDueTotal]]
         colWidths = [1,3,2]
@@ -109,9 +112,9 @@ if authentication_status:
     # ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
 
     if st.sidebar.button("Refresh Data",key="clearCache"):
-        subDf = am.get_diff_df()
+        # subDf = am.get_diff_df()
         subDf_j = am.get_diff_df_j()
-        am.insert_values(subDf,"h")
+        # am.insert_values(subDf,"h")
         am.insert_values(subDf_j,"j")
         st.cache_data.clear()
         st.experimental_rerun()

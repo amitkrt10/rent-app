@@ -21,9 +21,9 @@ if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):
         tenantDf, activeFlatList = st.session_state["tenantDf"], st.session_state["activeFlatList"]
         otherChargesDf = st.session_state["otherChargesDf"]
-        st.balloons()
 
-    st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Other Charges</h2>", unsafe_allow_html=True)
+    # st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Other Charges</h2>", unsafe_allow_html=True)
+    am.get_header('Other Charges')
 
     # other charges
     with st.expander("Enter Other Chages"):

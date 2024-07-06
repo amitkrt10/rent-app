@@ -15,17 +15,17 @@ st.markdown("<h1 style='text-align: center;text-shadow: 3px 2px RED;font-style: 
 if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):
         cashCredit, cashDebit = st.session_state["cashCredit"],st.session_state["cashDebit"]
-        st.balloons()
     
     credit = cashCredit["Amount"].sum()
     debit = cashDebit["Amount"].sum()
     cashInHand = credit - debit
-    st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Cash in Hand = ₹ {format_number(cashInHand, locale='en_IN')}</h3>", unsafe_allow_html=True)
+    # st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Cash in Hand = ₹ {format_number(cashInHand, locale="en_IN")}</h3>", unsafe_allow_html=True)
+    am.get_header(f'Cash in Hand = ₹ {format_number(cashInHand, locale="en_IN")}')
     # st.write(f"Cash Credit = ₹ {credit}")
     # st.write(f"Cash Debit = ₹ {debit}")
     #Show Table
     column_headers = ['Credit','Debit']
-    cellText = [[f"₹ {format_number(credit, locale='en_IN')}",f"₹ {format_number(debit, locale='en_IN')}"]]
+    cellText = [[f"₹ {format_number(credit, locale="en_IN")}",f"₹ {format_number(debit, locale="en_IN")}"]]
     colWidths = [1,1]
     scaleY = 8
     headerFontSize = 50

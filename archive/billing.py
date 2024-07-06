@@ -22,12 +22,12 @@ if "login" in st.session_state.keys():
         paymentDf = st.session_state["paymentDf"]
         meterDf, readingMonthList = st.session_state["meterDf"], st.session_state["readingMonthList"]
         statementDf = st.session_state["statementDf"]
-        st.balloons()
 
     upBillingDate = date.today() - dateutil.relativedelta.relativedelta(months=1)
     upBillingMonth = upBillingDate.strftime("%m/%Y")
 
-    st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Billings</h2>", unsafe_allow_html=True)
+    # st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Billings</h2>", unsafe_allow_html=True)
+    am.get_header('Billings')
 
     #Create Bills
     with st.expander(f"Create Bills for {upBillingMonth}"):
@@ -103,9 +103,9 @@ if "login" in st.session_state.keys():
             tempStatementDf = statementDf[statementDf.index==selectedFlat]
             tempStatementList = ['Total',tempStatementDf["bill"].sum(),tempStatementDf["payment"].sum(),tempStatementDf["bill"].sum()-tempStatementDf["payment"].sum()]
             tempStatementDf.loc[len(tempStatementDf.index)] = tempStatementList
-            tempStatementDf["bill"] = tempStatementDf['bill'].apply(lambda x: format_number(x, locale='en_IN'))
-            tempStatementDf["payment"] = tempStatementDf['payment'].apply(lambda x: format_number(x, locale='en_IN'))
-            tempStatementDf["dues"] = tempStatementDf['dues'].apply(lambda x: format_number(x, locale='en_IN'))
+            tempStatementDf["bill"] = tempStatementDf['bill'].apply(lambda x: format_number(x, locale="en_IN"))
+            tempStatementDf["payment"] = tempStatementDf['payment'].apply(lambda x: format_number(x, locale="en_IN"))
+            tempStatementDf["dues"] = tempStatementDf['dues'].apply(lambda x: format_number(x, locale="en_IN"))
             st.write(f'{tenantName} | {selectedFlat}')
             column_headers = ['Date','Bills','Payments','Dues']
             cellText = tempStatementDf.values

@@ -17,9 +17,9 @@ if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):
         tenantDf, activeFlatList = st.session_state["tenantDf"], st.session_state["activeFlatList"]
         currentDueDf = st.session_state["currentDueDf"]
-        st.balloons()
 
-    st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Payments</h2>", unsafe_allow_html=True)
+    # st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Payments</h2>", unsafe_allow_html=True)
+    am.get_header('Payments')
 
     #Payments
     with st.expander("Recieved Payments"):

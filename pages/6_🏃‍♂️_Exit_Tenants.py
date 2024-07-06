@@ -20,9 +20,9 @@ if "login" in st.session_state.keys():
         tenantDf, activeFlatList = st.session_state["tenantDf"], st.session_state["activeFlatList"]
         currentDueDf = st.session_state["currentDueDf"]
         meterDf = st.session_state["meterDf"]
-        st.balloons()
 
-    st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Exit Tenants</h2>", unsafe_allow_html=True)
+    # st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Exit Tenants</h2>", unsafe_allow_html=True)
+    am.get_header(Exit Tenants)
 
     with st.expander("Inactive Tenants"):
         column_headers = ["Flat","Tenant Name","Contact"]
@@ -93,9 +93,9 @@ if "login" in st.session_state.keys():
             tempBill = tempExitStatementDf["bill"].sum()
             tempPay = tempExitStatementDf["payment"].sum()
             tempExitStatementDf.loc[len(tempExitStatementDf.index)] = ["Total",tempBill,tempPay,tempBill-tempPay]
-            tempExitStatementDf["bill"] = tempExitStatementDf['bill'].apply(lambda x: format_number(x, locale='en_IN'))
-            tempExitStatementDf["payment"] = tempExitStatementDf['payment'].apply(lambda x: format_number(x, locale='en_IN'))
-            tempExitStatementDf["due"] = tempExitStatementDf['due'].apply(lambda x: format_number(x, locale='en_IN'))
+            tempExitStatementDf["bill"] = tempExitStatementDf['bill'].apply(lambda x: format_number(x, locale="en_IN"))
+            tempExitStatementDf["payment"] = tempExitStatementDf['payment'].apply(lambda x: format_number(x, locale="en_IN"))
+            tempExitStatementDf["due"] = tempExitStatementDf['due'].apply(lambda x: format_number(x, locale="en_IN"))
             column_headers = ['Date','Bills','Payments','Dues']
             cellText = tempExitStatementDf.values
             colWidths = [1,1,1,1]

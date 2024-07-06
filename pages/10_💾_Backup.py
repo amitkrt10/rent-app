@@ -5,6 +5,7 @@ import os.path
 import pandas as pd
 import psycopg2
 import psycopg2.extras as extras
+import adminModules as am
 import time
 import json
 from googleapiclient.discovery import build
@@ -25,9 +26,9 @@ if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):
         tenantDf, activeFlatList = st.session_state["tenantDf"], st.session_state["activeFlatList"]
         currentDueDf = st.session_state["currentDueDf"]
-        st.balloons()
 
-    st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Backup Data</h2>", unsafe_allow_html=True)
+    # st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Backup Data</h2>", unsafe_allow_html=True)
+    am.get_header('Backup Data')
 
     # Read txt
     f = open("backup_files/temp.txt", "r")

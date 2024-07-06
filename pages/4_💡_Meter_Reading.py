@@ -19,12 +19,12 @@ if "login" in st.session_state.keys():
         activeFlatList = st.session_state["activeFlatList"]
         meterDf, readingMonthList = st.session_state["meterDf"], st.session_state["readingMonthList"]
         consumptionDict = st.session_state["consumptionDict"]
-        st.balloons()
 
     upBillingDate = date.today() - dateutil.relativedelta.relativedelta(months=1)
     upBillingMonth = upBillingDate.strftime("%Y/%m")
 
-    st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Electricity</h2>", unsafe_allow_html=True)
+    # st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Electricity</h2>", unsafe_allow_html=True)
+    am.get_header('Electricity')
 
     # Meter Reading Form
     with st.expander(f"Take Meter Reading for {upBillingMonth}"):

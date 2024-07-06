@@ -15,9 +15,9 @@ if "login" in st.session_state.keys():
     with st.spinner(text='Reading Data... Please Wait...!'):
         activeFlatList = st.session_state["activeFlatList"]
         flatDf, vacantFlatList = st.session_state["flatDf"], st.session_state["vacantFlatList"]
-        st.balloons()
 
-    st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Property</h2>", unsafe_allow_html=True)
+    # st.markdown("<h2 style='text-align: center;text-shadow: 3px 2px blue;font-style: oblique;'>Property</h2>", unsafe_allow_html=True)
+    am.get_header('Property')
 
     #Property Details
     with st.expander("Property Details"):

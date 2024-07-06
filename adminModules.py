@@ -142,11 +142,11 @@ def get_collectionDf():
     collectionDf["ratio"] = (collectionDf["total_payment"]/collectionDf["bill_total"])*100
     collectionDf["ratio"] = collectionDf["ratio"].astype(int)
     collectionDf["ratio"] = collectionDf['ratio'].apply(lambda x: f"{x} %")
-    collectionDf["cash"] = collectionDf['cash'].apply(lambda x: format_number(x, locale='en_IN'))
-    collectionDf["online"] = collectionDf['online'].apply(lambda x:format_number(x, locale='en_IN'))
-    collectionDf["adjustment"] = collectionDf['adjustment'].apply(lambda x: format_number(x, locale='en_IN'))
-    collectionDf["total_payment"] = collectionDf['total_payment'].apply(lambda x: format_number(x, locale='en_IN'))
-    collectionDf["bill_total"] = collectionDf['bill_total'].apply(lambda x: format_number(x, locale='en_IN'))
+    collectionDf["cash"] = collectionDf['cash'].apply(lambda x: format_number(x, locale="en_IN"))
+    collectionDf["online"] = collectionDf['online'].apply(lambda x:format_number(x, locale="en_IN"))
+    collectionDf["adjustment"] = collectionDf['adjustment'].apply(lambda x: format_number(x, locale="en_IN"))
+    collectionDf["total_payment"] = collectionDf['total_payment'].apply(lambda x: format_number(x, locale="en_IN"))
+    collectionDf["bill_total"] = collectionDf['bill_total'].apply(lambda x: format_number(x, locale="en_IN"))
     conn.close()
     return collectionDf
 
@@ -263,9 +263,9 @@ def get_bankStatement():
         remark
         from summary'''
     bankDf = pd.read_sql(sql, con=conn)
-    bankDf['deposit'] = bankDf['deposit'].apply(lambda x: format_number(int(x), locale='en_IN'))
-    bankDf['withdrawal'] = bankDf['withdrawal'].apply(lambda x: format_number(int(x), locale='en_IN'))
-    bankDf['balance'] = bankDf['balance'].apply(lambda x: format_number(int(x), locale='en_IN'))
+    bankDf['deposit'] = bankDf['deposit'].apply(lambda x: format_number(int(x), locale="en_IN"))
+    bankDf['withdrawal'] = bankDf['withdrawal'].apply(lambda x: format_number(int(x), locale="en_IN"))
+    bankDf['balance'] = bankDf['balance'].apply(lambda x: format_number(int(x), locale="en_IN"))
     cursor = conn.cursor()
     cursor.execute("""select sum(deposit), sum(withdrawal) from public.bank_statement where account = 'PKD'""")
     depWit = cursor.fetchall()
@@ -297,9 +297,9 @@ def get_bankStatement_j():
         remark
         from summary'''
     bankDf = pd.read_sql(sql, con=conn)
-    bankDf['deposit'] = bankDf['deposit'].apply(lambda x: format_number(int(x), locale='en_IN'))
-    bankDf['withdrawal'] = bankDf['withdrawal'].apply(lambda x: format_number(int(x), locale='en_IN'))
-    bankDf['balance'] = bankDf['balance'].apply(lambda x: format_number(int(x), locale='en_IN'))
+    bankDf['deposit'] = bankDf['deposit'].apply(lambda x: format_number(int(x), locale="en_IN"))
+    bankDf['withdrawal'] = bankDf['withdrawal'].apply(lambda x: format_number(int(x), locale="en_IN"))
+    bankDf['balance'] = bankDf['balance'].apply(lambda x: format_number(int(x), locale="en_IN"))
     cursor = conn.cursor()
     cursor.execute("""select sum(deposit), sum(withdrawal) from public.bank_statement_j where account = 'PKD'""")
     depWit = cursor.fetchall()
@@ -413,3 +413,7 @@ def get_otherCharges():
     otherChargesDf = pd.read_sql(sql, con=conn)
     conn.close()
     return otherChargesDf
+
+
+def get_header(title):
+    st.markdown(f"<h3 style='text-align: center;text-shadow: 1px 1px gray;font-style: oblique;'>{title}</h3>", unsafe_allow_html=True)
