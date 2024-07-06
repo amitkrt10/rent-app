@@ -47,7 +47,7 @@ if "login" in st.session_state.keys():
                 st.session_state["currentDueDf"], st.session_state["totalCurrentDue"] = am.get_currentDueDf()
                 st.session_state["whatsappData"] = am.get_whatsappData()
                 st.session_state["otherChargesDf"] = am.get_otherCharges()
-                st.experimental_rerun()
+                st.rerun()
 
 else:
     st.error("Please Login First...!")

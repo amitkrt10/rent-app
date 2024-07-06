@@ -42,7 +42,7 @@ if "login" in st.session_state.keys():
                 st.write(f"New flat - {flatNo} successfully added.")
                 am.get_flatDf.clear()
                 st.session_state["flatDf"], st.session_state["vacantFlatList"] = am.get_flatDf()
-                st.experimental_rerun()
+                st.rerun()
 
     #Modify Facilities
     with st.expander("Update Facilities"):
@@ -55,7 +55,7 @@ if "login" in st.session_state.keys():
                 st.write(f"Flat - {selectedFlat} successfully updated.")
                 am.get_flatDf.clear()
                 st.session_state["flatDf"], st.session_state["vacantFlatList"] = am.get_flatDf()
-                st.experimental_rerun()
+                st.rerun()
 
     #Revomve flat
     with st.expander("Remove Property"):
@@ -67,7 +67,7 @@ if "login" in st.session_state.keys():
                 st.write(f"Flat - {flatNoR} successfully removed.")
                 am.get_flatDf.clear()
                 st.session_state["flatDf"], st.session_state["vacantFlatList"] = am.get_flatDf()
-                st.experimental_rerun()
+                st.rerun()
 
 else:
     st.error("Please Login First...!")

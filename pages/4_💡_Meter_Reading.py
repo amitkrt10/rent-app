@@ -48,7 +48,7 @@ if "login" in st.session_state.keys():
                     am.get_consumption.clear()
                     st.session_state["meterDf"], st.session_state["readingMonthList"] = am.get_meterDf()
                     st.session_state["consumptionDict"] = am.get_consumption()
-                    st.experimental_rerun()
+                    st.rerun()
 
     # Show Meter Readings by Month
     with st.expander("Electricity Consumptions by Month"):

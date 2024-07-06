@@ -55,7 +55,7 @@ if "login" in st.session_state.keys():
                     am.get_collectionDf.clear()
                     am.get_statementDf.clear()
                     am.get_currentDueDf.clear()
-                    st.experimental_rerun()
+                    st.rerun()
 
     # View Bills
     with st.expander("View Bills"):

@@ -121,4 +121,4 @@ if 1==1:
         # am.insert_values(subDf,"h")
         am.insert_values(subDf_j,"j")
         st.cache_data.clear()
-        st.experimental_rerun()
+        st.rerun()

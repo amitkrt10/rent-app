@@ -43,7 +43,7 @@ if "login" in st.session_state.keys():
                     time.sleep(3)
                     am.get_otherCharges.clear()
                     st.session_state["otherChargesDf"] = am.get_otherCharges()
-                    st.experimental_rerun()
+                    st.rerun()
 
     with st.expander("Other Chages Statement"):
         column_headers = ['Flat No.','Date','Amount','Remark']

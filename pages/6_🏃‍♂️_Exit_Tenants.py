@@ -50,7 +50,7 @@ if "login" in st.session_state.keys():
                 am.get_exitDueDict.clear()
                 st.session_state["exitTenantDf"], st.session_state["exitStatementDf"] = am.get_exitTenantDf()
                 st.session_state["exitDueDict"], st.session_state["exitDueList"], st.session_state["exitTenantList"], st.session_state["exitDueTotal"] = am.get_exitDueDict()
-                st.experimental_rerun()
+                st.rerun()
 
     #View Final Exit Bills
     with st.expander("View Final Exit Bills"):

@@ -75,7 +75,7 @@ if "login" in st.session_state.keys():
                     st.session_state["statementDf"] = am.get_statementDf()
                     st.session_state["currentDueDf"], st.session_state["totalCurrentDue"] = am.get_currentDueDf()
                     st.session_state["whatsappData"] = am.get_whatsappData()
-                    st.experimental_rerun()
+                    st.rerun()
 
     # View Bills
     with st.expander("View Bills"):
