@@ -154,5 +154,5 @@ if "login" in st.session_state.keys():
 
 
 else:
-    st.error("Please Login First...!")
-    st.markdown("[Login](https://kb-owner.streamlitapp.com/)")
+    st.error("Session Expired! Go to homepage...!")
+    st.markdown("[Homepage](https://kb-owner-v1.streamlitapp.com/)")

@@ -90,5 +90,5 @@ if "login" in st.session_state.keys():
         ap.plot_bar(title,x_data,y_data,bar_width,x_rotate,fontsize)    
 
 else:
-    st.error("Please Login First...!")
-    st.markdown("[Login](https://kb-owner.streamlitapp.com/)")
+    st.error("Session Expired! Go to homepage...!")
+    st.markdown("[Homepage](https://kb-owner-v1.streamlitapp.com/)")

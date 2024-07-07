@@ -60,4 +60,6 @@ if "login" in st.session_state.keys():
 
     st.write("Rs 35000 due for the furnitures.")
     
-
+else:
+    st.error("Session Expired! Go to homepage...!")
+    st.markdown("[Homepage](https://kb-owner-v1.streamlitapp.com/)")

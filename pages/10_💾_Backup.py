@@ -141,3 +141,7 @@ if "login" in st.session_state.keys():
         txtFile = open("backup_files/temp.txt", "w")
         txtFile.write(f"Last backup done at {print_time} {folder_id}")
         txtFile.close()
+
+else:
+    st.error("Session Expired! Go to homepage...!")
+    st.markdown("[Homepage](https://kb-owner-v1.streamlitapp.com/)")

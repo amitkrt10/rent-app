@@ -102,5 +102,5 @@ if "login" in st.session_state.keys():
     st.download_button("Download Statement", csv, fileName, "text/csv", key="download_j")
 
 else:
-    st.error("Please Login First...!")
-    st.markdown("[Login](https://kb-owner.streamlitapp.com/)")
+    st.error("Session Expired! Go to homepage...!")
+    st.markdown("[Homepage](https://kb-owner-v1.streamlitapp.com/)")

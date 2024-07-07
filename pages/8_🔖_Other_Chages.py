@@ -54,3 +54,7 @@ if "login" in st.session_state.keys():
         cellFontSize = 70
         alignList = ['center','center','right','left']
         ap.plot_table(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
+
+else:
+    st.error("Session Expired! Go to homepage...!")
+    st.markdown("[Homepage](https://kb-owner-v1.streamlitapp.com/)")

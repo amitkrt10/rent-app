@@ -148,5 +148,5 @@ if "login" in st.session_state.keys():
                 ap.plot_table_with_total(column_headers,cellText,colWidths,scaleY,headerFontSize,cellFontSize,alignList)
 
 else:
-    st.error("Please Login First...!")
-    st.markdown("[Login](https://kb-owner.streamlitapp.com/)")
+    st.error("Session Expired! Go to homepage...!")
+    st.markdown("[Homepage](https://kb-owner-v1.streamlitapp.com/)")
