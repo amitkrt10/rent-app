@@ -12,8 +12,15 @@ st.set_page_config(
 )
 am.get_header1()
 
-if "login" in st.session_state.keys():
+# if "login" in st.session_state.keys():
+if 1==1:
+    st.session_state["login"] = True
     with st.spinner(text='Reading Data... Please Wait...!'):
+        st.session_state["tenantDf"], st.session_state["activeFlatList"], st.session_state["initiaDueDict"], st.session_state["newTenantFlats"] = am.get_tenantDf()
+        st.session_state["meterDf"], st.session_state["readingMonthList"] = am.get_meterDf()
+        st.session_state["currentDueDf"], st.session_state["totalCurrentDue"] = am.get_currentDueDf()
+        st.session_state["tenantInfoDict"] = am.get_tenantInfo()
+        st.session_state["flatDf"], st.session_state["vacantFlatList"] = am.get_flatDf()
         tenantDf, activeFlatList = st.session_state["tenantDf"], st.session_state["activeFlatList"]
         meterDf = st.session_state["meterDf"]
         vacantFlatList = st.session_state["vacantFlatList"]
@@ -77,21 +84,42 @@ if "login" in st.session_state.keys():
                 am.runSql(f"""INSERT INTO public.active_tenants(flat_no, tenant_name, mobile, security_deposite, rent_amount, water_charge, garbage_charge, previous_due, initial_meter_reading, date_of_ocupancy, password, username) VALUES ('{flatNo}','{tenantName}','{tenantMobile}','{securityDeposite}','{rentAmt}','{waterCharge}','{garbageCharge}','{previousDue}','{initialMeterReading}','{dateOfOccupancy}','{password}','{str(tenantMobile)}')""")
                 st.write(f"Details of {tenantName} successfully added to Flat No. {flatNo}")
                 time.sleep(3)
-                am.get_tenantDf.clear()
-                am.get_meterDf.clear()
-                am.get_flatDf.clear()
-                am.get_statementDf.clear()
-                am.get_currentDueDf.clear()
-                am.get_tenantInfo.clear()
-                am.get_whatsappData.clear()
-                st.session_state["tenantDf"], st.session_state["activeFlatList"], st.session_state["initiaDueDict"], st.session_state["newTenantFlats"] = am.get_tenantDf()
-                st.session_state["meterDf"], st.session_state["readingMonthList"] = am.get_meterDf()
-                st.session_state["flatDf"], st.session_state["vacantFlatList"] = am.get_flatDf()
-                st.session_state["statementDf"] = am.get_statementDf()
-                st.session_state["currentDueDf"], st.session_state["totalCurrentDue"] = am.get_currentDueDf()
-                st.session_state["currentDueDf"], st.session_state["totalCurrentDue"] = am.get_currentDueDf()
-                st.session_state["tenantInfoDict"] = am.get_tenantInfo()
-                st.session_state["whatsappData"] = am.get_whatsappData()
+                try:
+                    am.get_tenantDf.clear()
+                except:
+                    pass
+                try:
+                    am.get_meterDf.clear()
+                except:
+                    pass
+                try:
+                    am.get_flatDf.clear()
+                except:
+                    pass
+                try:
+                    am.get_statementDf.clear()
+                except:
+                    pass
+                try:
+                    am.get_currentDueDf.clear()
+                except:
+                    pass
+                try:
+                    am.get_tenantInfo.clear()
+                except:
+                    pass
+                try:
+                    am.get_whatsappData.clear()
+                except:
+                    pass
+                # st.session_state["tenantDf"], st.session_state["activeFlatList"], st.session_state["initiaDueDict"], st.session_state["newTenantFlats"] = am.get_tenantDf()
+                # st.session_state["meterDf"], st.session_state["readingMonthList"] = am.get_meterDf()
+                # st.session_state["flatDf"], st.session_state["vacantFlatList"] = am.get_flatDf()
+                # st.session_state["statementDf"] = am.get_statementDf()
+                # st.session_state["currentDueDf"], st.session_state["totalCurrentDue"] = am.get_currentDueDf()
+                # st.session_state["currentDueDf"], st.session_state["totalCurrentDue"] = am.get_currentDueDf()
+                # st.session_state["tenantInfoDict"] = am.get_tenantInfo()
+                # st.session_state["whatsappData"] = am.get_whatsappData()
                 st.rerun()
 
     #Remove Tenant Form

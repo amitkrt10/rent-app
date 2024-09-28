@@ -30,26 +30,26 @@ if 1==1:
     # if "login" not in st.session_state:
     #     st.session_state["login"] = True
     with st.spinner(text='Reading Data... Please Wait...!'):
-        st.session_state["tenantDf"], st.session_state["activeFlatList"], st.session_state["initiaDueDict"], st.session_state["newTenantFlats"] = am.get_tenantDf()
-        st.session_state["billDf"], st.session_state["billMonthList"] = am.get_billDf()
-        st.session_state["paymentDf"], st.session_state["paymentMonthList"] = am.get_paymentDf()
-        st.session_state["meterDf"], st.session_state["readingMonthList"] = am.get_meterDf()
-        st.session_state["statementDf"] = am.get_statementDf()
-        st.session_state["exitDueDict"], st.session_state["exitDueList"], st.session_state["exitTenantList"], st.session_state["exitDueTotal"] = am.get_exitDueDict()
-        st.session_state["exitTenantDf"], st.session_state["exitStatementDf"] = am.get_exitTenantDf()
+        # st.session_state["tenantDf"], st.session_state["activeFlatList"], st.session_state["initiaDueDict"], st.session_state["newTenantFlats"] = am.get_tenantDf()
+        # st.session_state["billDf"], st.session_state["billMonthList"] = am.get_billDf()
+        # st.session_state["paymentDf"], st.session_state["paymentMonthList"] = am.get_paymentDf()
+        # st.session_state["meterDf"], st.session_state["readingMonthList"] = am.get_meterDf()
+        # st.session_state["statementDf"] = am.get_statementDf()
+        # st.session_state["exitDueDict"], st.session_state["exitDueList"], st.session_state["exitTenantList"], st.session_state["exitDueTotal"] = am.get_exitDueDict()
+        # st.session_state["exitTenantDf"], st.session_state["exitStatementDf"] = am.get_exitTenantDf()
         st.session_state["collectionDf"] = am.get_collectionDf()
         st.session_state["currentDueDf"], st.session_state["totalCurrentDue"] = am.get_currentDueDf()
-        st.session_state["consumptionDict"] = am.get_consumption()
-        st.session_state["flatDf"], st.session_state["vacantFlatList"] = am.get_flatDf()
+        # st.session_state["consumptionDict"] = am.get_consumption()
+        # st.session_state["flatDf"], st.session_state["vacantFlatList"] = am.get_flatDf()
         # st.session_state["bankDf"], st.session_state["totalDeposite"], st.session_state["totalWithdraw"], st.session_state["rentCollection"], st.session_state["electricityExpense"], st.session_state["wifiExpense"], st.session_state["travelDeposite"], st.session_state["bankAccountDf"] = am.get_bankStatement()
-        st.session_state["bankDf_j"], st.session_state["totalDeposite_j"], st.session_state["totalWithdraw_j"], st.session_state["rentCollection_j"], st.session_state["electricityExpense_j"], st.session_state["wifiExpense_j"], st.session_state["travelDeposite_j"], st.session_state["bankAccountDf_j"] = am.get_bankStatement_j()
-        st.session_state["tenantInfoDict"] = am.get_tenantInfo()
-        st.session_state["whatsappData"] = am.get_whatsappData()
+        # st.session_state["bankDf_j"], st.session_state["totalDeposite_j"], st.session_state["totalWithdraw_j"], st.session_state["rentCollection_j"], st.session_state["electricityExpense_j"], st.session_state["wifiExpense_j"], st.session_state["travelDeposite_j"], st.session_state["bankAccountDf_j"] = am.get_bankStatement_j()
+        # st.session_state["tenantInfoDict"] = am.get_tenantInfo()
+        # st.session_state["whatsappData"] = am.get_whatsappData()
         # st.session_state["cashCredit"],st.session_state["cashDebit"] = am.get_cash_data()
-        st.session_state["otherChargesDf"] = am.get_otherCharges()
+        # st.session_state["otherChargesDf"] = am.get_otherCharges()
         collectionDf = st.session_state["collectionDf"]
         currentDueDf, totalCurrentDue = st.session_state["currentDueDf"], st.session_state["totalCurrentDue"]
-        exitDueList, exitDueTotal = st.session_state["exitDueList"], st.session_state["exitDueTotal"]
+        # exitDueList, exitDueTotal = st.session_state["exitDueList"], st.session_state["exitDueTotal"]
         # bankAccountDf = st.session_state["bankAccountDf"]
 
     # Current Dues.
@@ -93,6 +93,8 @@ if 1==1:
 
     #Exit Dues
     with st.expander("Ex Tenant Dues"):
+        st.session_state["exitDueDict"], st.session_state["exitDueList"], st.session_state["exitTenantList"], st.session_state["exitDueTotal"] = am.get_exitDueDict()
+        exitDueList, exitDueTotal = st.session_state["exitDueList"], st.session_state["exitDueTotal"]
         # st.markdown(f"<h3 style='text-align: center;text-shadow: 3px 2px gray;font-style: oblique;'>Exit Tenants Dues = ₹ {format_number(exitDueTotal, locale="en_IN")}</h3>", unsafe_allow_html=True)
         am.get_header(f'Exit Tenants Dues = ₹ {format_number(exitDueTotal, locale="en_IN")}')
         column_headers = ['Flat','Tenant Name','Dues']
