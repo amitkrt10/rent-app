@@ -215,29 +215,30 @@ def get_exitDueDict():
 def get_consumption():
     conn = psycopg2.connect(database=DATABASE, user=USER, password=PASSWORD, host=HOST, port=PORT)
     cursor = conn.cursor()
-    cursor.execute('''select flat_no, readings from public.meter_reading order by 1, 2 desc''')
+    cursor.execute('''select 
+                            a.flat_no
+                            , a.readings - coalesce(b.readings, c.readings) as consumption
+                        from 
+                        (
+                            select * from public.meter_reading
+                            where reading_month = (select distinct reading_month from public.meter_reading order by 1 desc limit 1)
+                        ) a
+                        left join
+                        (
+                            select * from public.meter_reading
+                            where reading_month = (select reading_month from(select distinct reading_month from public.meter_reading order by 1 desc limit 2) a order by 1 limit 1)
+                        ) b on b.flat_no = a.flat_no
+                        left join 
+                        (
+                            select flat_no, initial_meter_reading as readings from public.active_tenants
+                        ) c on c.flat_no = a.flat_no
+                        order by 2''')
     z = cursor.fetchall()
     conn.close()
-    keyList = []
-    valueList = []
-    tempList = []
-    for i in range(len(z)):
-        if i==0:
-            keyList.append(z[i][0])
-            tempList.append(z[i][1])
-        elif z[i][0] in keyList:
-            tempList.append(z[i][1])
-        else:
-            valueList.append(tempList)
-            tempList = []
-            keyList.append(z[i][0])
-            tempList.append(z[i][1])
-    valueList.append(tempList)
     consumptionDict = {}
-    for i in range(len(keyList)):
-        if len(valueList[i]) > 1:
-            consumptionDict.update({keyList[i]:valueList[i][0] - valueList[i][1]})
-    return dict(sorted(consumptionDict.items(), key=lambda item: item[1]))
+    for i in range(len(z)):
+        consumptionDict.update({z[i][0]:z[i][1]})
+    return consumptionDict
 
 # @st.cache_data
 # def get_loginCredential():
